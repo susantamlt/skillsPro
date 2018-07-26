@@ -1,0 +1,393 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+class Projects extends MX_Controller 
+{
+	public function __construct(){
+		parent::__construct();
+		$this->lang->load('data');
+		modules::run('login/login/is_sales_logged_in');
+	}
+
+	public function index() {		
+		$this->load->view('common/sales-top');
+		$this->load->view('projects/list');
+		$this->load->view('common/sales-bottom');
+	}
+
+	public function projects_list_m() {
+		$this->load->model('projects_model');
+		$result = $this->projects_model->get_Jobs_listm();
+		$aaData = array();
+		foreach($result['aaData'] as $row){
+			if($row[1]!=''){
+				$row[1]= ucwords($row[1]);
+			}
+			if($row[2]!=''){
+				$row[2]= ucwords($row[2]);
+			}
+			if($row[3]!=''){
+				$row[3]= ucwords($row[3]);
+			}
+			if($row[4]!=''){
+				$row[4]= ucwords($row[4]);
+			}
+			if($row[5]!=''){
+				$row[5]= ucwords($row[5]);
+			}
+			if($row[6]!=''){
+				$row[6]= ucwords($row[6]);
+			}
+			if($row[7]!=''){
+				$row[7]= ucwords($row[7]);
+			}
+			if($row[8]!=''){
+				$row[8]= date('jS M Y', strtotime($row[8]));
+			}
+			$row[9] = '<a href="'.base_url('sales/projects/projects_view/').$row[0].'" title="View Record" data-toggle="tooltip"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/projects/projects_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip"><i class="glyphicon glyphicon-edit" ></i></a>';
+			$row[0] = '<input type="checkbox" id="checkbox-1-' . intval($row[0]) . '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $row[0] . '"/><label for="checkbox-1-' . intval($row[0]) . '"></label>';
+			$aaData[] = $row;
+		}
+		$result['aaData'] = $aaData;
+		print_r(json_encode($result));
+	}
+
+	public function projects_list_a() {
+		$this->load->model('projects_model');
+		$result = $this->projects_model->get_Jobs_lista();
+		$aaData = array();
+		foreach($result['aaData'] as $row){
+			if($row[1]!=''){
+				$row[1]= ucwords($row[1]);
+			}
+			if($row[2]!=''){
+				$row[2]= ucwords($row[2]);
+			}
+			if($row[3]!=''){
+				$row[3]= ucwords($row[3]);
+			}
+			if($row[4]!=''){
+				$row[4]= ucwords($row[4]);
+			}
+			if($row[5]!=''){
+				$row[5]= ucwords($row[5]);
+			}
+			if($row[6]!=''){
+				$row[6]= ucwords($row[6]);
+			}
+			if($row[7]!=''){
+				$row[7]= ucwords($row[7]);
+			}
+			if($row[8]!=''){
+				$row[8]= date('jS M Y', strtotime($row[8]));
+			}
+			$row[9] = '<a href="'.base_url('sales/projects/projects_view/').$row[0].'" title="View Record" data-toggle="tooltip"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/projects/projects_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip"><i class="glyphicon glyphicon-edit" ></i></a>';
+			$row[0] = '<input type="checkbox" id="checkbox-1-' . intval($row[0]) . '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $row[0] . '"/><label for="checkbox-1-' . intval($row[0]) . '"></label>';
+			$aaData[] = $row;
+		}
+		$result['aaData'] = $aaData;
+		print_r(json_encode($result));
+	}
+
+	public function projects_add($name="") {
+		$this->load->model('projects_model');
+		$data['urlname'] = 'Project';		
+		$date['client_id'] = '';
+		$date['cat_id'] = '';
+		$data['ljp_status'] = $this->config->item('ljp_projectStatus');
+		$data['ljp_leadtype'] = $this->config->item('ljp_projectType');
+		$data['ljp_projectStage'] = $this->config->item('ljp_projectStage');
+		$data['ljp_country'] = $this->projects_model->get_ljp_country();
+		$data['ljp_clients'] = $this->projects_model->get_ljp_clients();
+		$this->load->view('common/sales-top');
+		$this->load->view('projects/projectsadd',$data);
+		$this->load->view('common/sales-bottom');
+	}
+
+	public function projects_edit($id="") {
+		$this->load->model('projects_model');
+		$data['urlname'] = 'Project';
+		$data['ljp_status'] = $this->config->item('ljp_projectStatus');
+		$data['ljp_leadtype'] = $this->config->item('ljp_projectType');
+		$data['ljp_projectStage'] = $this->config->item('ljp_projectStage');
+		$jobs = $this->projects_model->get_ljp_jobs($id);
+		$data['jobs'] = $jobs;
+		$data['ljp_country'] = $this->projects_model->get_ljp_country();
+		$data['ljp_clients'] = $this->projects_model->get_ljp_clients();
+		$data['ljp_state'] = $this->projects_model->statelist($jobs[0]);
+		$data['ljp_city'] = $this->projects_model->citylist($jobs[0]);
+		$this->load->view('common/sales-top');
+		$this->load->view('projects/projectsedit',$data);
+		$this->load->view('common/sales-bottom');
+	}
+
+	public function projects_view($id='') {
+		$this->load->model('projects_model');
+		$data['urlname'] = 'Project';
+		$jobs = $this->projects_model->get_ljp_jobsView($id);
+		
+		$ljp_status = $this->config->item('ljp_projectStatus');
+		$ljp_leadtype = $this->config->item('ljp_projectType');
+		$ljp_projectStage = $this->config->item('ljp_projectStage');
+		$jobs[0]['lead_type']=$ljp_leadtype[$jobs[0]['lead_type']];
+		$jobs[0]['lead_status']=$ljp_status[$jobs[0]['lead_status']];
+
+		$data['jobs'] = $jobs;
+
+		$this->load->view('common/sales-top');
+		$this->load->view('projects/projectsview',$data);
+		$this->load->view('common/sales-bottom');
+	}
+
+	public function projects_search() {
+		$this->load->model('jobs_model');
+		$data['urlname'] = 'Project';
+		$date['cat_id'] = '';
+		$data['ljp_projectType'] = $this->config->item('ljp_projectType');
+		$data['ljp_country'] = $this->jobs_model->get_ljp_country();
+		$this->load->view('common/sales-top');
+		$this->load->view('projects/projectssearch',$data);
+		$this->load->view('common/sales-bottom');
+	}
+
+	public function projectsearch() {
+		$data = $this->input->post();
+		if(isset($data['lead_type']) && $data['lead_type']!='' && isset($data['city_id']) && $data['city_id']!='' && isset($data['state_code']) && $data['state_code']!='' && isset($data['country_code']) && $data['country_code']!=''){
+			$client = new Indeedapi("444214432879792");
+			$params = array(
+				"q" => $data['lead_type'],
+				"l" => $data['city_id'].','.$data['state_code'],
+				"userip" => "1.2.3.4",
+				"useragent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2)",
+				'start' => 0,
+				'limit' => 25,
+				'co'=>$data['country_code']
+			);
+			$results = $client->search($params);
+			if(!empty($results['results'])){
+				if($results['totalResults'] > '25'){
+					$_sEcho = ((int)$results['totalResults'] / 25);
+					if(is_float($_sEcho)){
+						$_sEcho1 = explode('.', $_sEcho);
+						$sEcho = $_sEcho1[0]+1;
+					} else {
+						$sEcho = $_sEcho;
+					}
+				} else {
+					$sEcho = 1;
+				}
+
+				$data = array('sEcho'=>(int)$sEcho,'iTotalRecords'=>(int)$results['totalResults'],'iTotalDisplayRecords'=>(int)$results['end'],'aaData'=>'');
+				$aaData = array();
+				foreach($results['results'] as $rk => $_data){
+					$_rk = $rk+1;
+					$row = array();
+					$row[0]='';
+					$row[1]= ucwords($_data['jobtitle']);
+					$row[2]= ucwords($_data['company']);
+					$row[3]= ucwords($_data['city'].', '.$_data['state'].', '.$_data['country']);
+					$row[4]= ucwords($_data['language']);
+					$row[5]= ucwords($_data['source']);
+					//$row[6]= ucwords($_data['snippet']);
+					$row[6]= ucwords($_data['formattedRelativeTime']);
+					$row[7]= date('jS M Y', strtotime($_data['date']));
+					$row[8] = '<a href="'.base_url('sales/projects/projectsearchview/').$_data['jobkey'].'" title="View Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-eye-open" ></i></a>';
+					$row[0] = '<input type="checkbox" id="checkbox-1-' . $_rk. '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $_rk . '"/><label for="checkbox-1-' . $_rk . '"></label>';
+					$aaData[] = $row;
+				}
+				$data['aaData'] = $aaData;
+			} else {
+				$data = array('sEcho'=>'0','iTotalRecords'=>'0','iTotalDisplayRecords'=>'0','aaData'=>array());
+			}
+		} else {
+			$data = array('sEcho'=>'0','iTotalRecords'=>'0','iTotalDisplayRecords'=>'0','aaData'=>array());
+		}
+		print_r(json_encode($data));
+	}
+
+	public function projectsearchview($id='') {
+		$data['urlname'] = 'Job';
+		if($id!=''){
+			$client = new Indeedapi("444214432879792");
+			$params = array(
+				"jobkeys" => array("$id"),
+			);
+			$results = $client->jobs($params);
+			if(!empty($results['results'])){
+				$data['results'] = $results['results'];
+				$this->load->view('common/sales-top');
+				$this->load->view('projects/projectssearchview',$data);
+				$this->load->view('common/sales-bottom');
+			} else {
+				$this->load->view('common/sales-top');
+				$this->load->view('common/sales-bottom');
+			}
+		} else {
+			$this->load->view('common/sales-top');
+			$this->load->view('common/sales-bottom');
+		}
+	}
+
+	public function projects_save() {
+		$data = $this->input->post();
+		if(!empty($data)){
+			$_dataNP = array();
+			$_dataN = array();
+			$this->load->model('projects_model');
+			if(isset($data['pcmt_id'])){
+				if($data['pcmt_id']!=''){
+					$_dataN['pcmt_id'] = $data['pcmt_id'];
+				}
+				unset($data['pcmt_id']);
+			}
+			if(isset($data['pfile_id'])){
+				if($data['pfile_id']!=''){
+					$_dataNP['pfile_id'] = $data['pfile_id'];
+				}
+				unset($data['pfile_id']);
+			}
+			$prospect_id = $this->projects_model->projects_save($data);
+			if(!empty($_dataN)){
+				$_dataN['prospect_id'] = $prospect_id;
+				$cmt_id = $this->jobs_model->projects_comment_save($_dataN);
+			}
+			if(!empty($_dataNP)){
+				$_dataNP['prospect_id'] = $prospect_id;
+				$file_id = $this->jobs_model->projects_file_save($_dataNP);
+			}
+			$_data['prospect_id'] = $prospect_id;
+			$_data['status'] = 1;
+			$_data['msg'] = 'Successful';
+		} else {
+			$_data['status'] = 0;
+			$_data['msg'] = 'Faillure';
+		}
+		echo json_encode($_data);
+	}
+
+	public function projects_client_save() {
+		$data = $this->input->post();
+		if(!empty($data)){
+			$this->load->model('projects_model');
+			$_data['client_id'] = $this->projects_model->projects_client_save($data);
+			$_data['ljp_clients'] = $this->projects_model->get_ljp_clients();
+			$_data['status'] = 1;
+			$_data['msg'] = 'Successful';
+		} else {
+			$_data['status'] = 0;
+			$_data['msg'] = 'Faillure';
+		}
+		echo json_encode($_data);
+	}
+
+	public function indtype() {
+		$data = $this->input->post();
+		if(!empty($data)){
+			$this->load->model('projects_model');
+			$_data['status'] = 1;
+			$_data['indtype'] = $this->projects_model->indtype($data);
+		} else {
+			$_data['status'] = 0;
+			$_data['indtype'] = '';
+		}
+		echo json_encode($_data);
+	}
+
+	public function contactdetails() {
+		$data = $this->input->post();
+		if(!empty($data)){
+			$this->load->model('projects_model');
+			$_data['status'] = 1;
+			$_data['catid'] = $this->projects_model->contactdetails($data);
+		} else {
+			$_data['status'] = 0;
+			$_data['catid'] = '';
+		}
+		echo json_encode($_data);
+	}
+
+	public function projects_comment_save(){
+		$data = $this->input->post();
+		if(!empty($data)){
+			$this->load->model('jobs_model');
+			$_data['status'] = 1;
+			$_data['pcmtid'] = $this->jobs_model->projects_comment_save($data);
+			$_data['message'] = 'Successful';
+		} else {
+			$_data['status'] = 0;
+			$_data['message'] = 'Failure';
+		}
+		echo json_encode($_data);
+	}
+
+	public function projects_file_save(){
+		$data = $this->input->post();
+		if(!empty($data)){
+			if(isset($_FILES['documentfile']) && !empty($_FILES['documentfile'])){
+				$config = array(
+					'upload_path' => "./assets/jobs/doc/",
+					'allowed_types' => "docx|jpeg|doc|pdf|jpg|xls|xlsx|csv|ppt|pptx",
+					'overwrite' => TRUE,
+					'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+				);
+				
+				$this->upload->initialize($config);
+				if (!$this->upload->do_upload('documentfile')) {
+					$_data['status'] = 0;
+					$_data['message'] = $this->upload->display_errors();
+				} else {
+					$redata = $this->upload->data();
+					$this->load->model('jobs_model');
+					$ndata['documentfile']=$redata['file_name'];
+					$ndata['pfile_name']=$data['pfile_name'];
+					if(isset($data['prospect_id']) && $data['prospect_id']!=''){
+						$ndata['prospect_id']=$data['prospect_id'];
+					}
+					$_data['status'] = 1;
+					$_data['pfileid'] = $this->jobs_model->projects_file_save($ndata);
+					$_data['message'] = 'Successful';
+				}
+			} else {
+				$_data['status'] = 1;
+				$_data['pfileid'] = $this->jobs_model->jobs_file_save($data);
+				$_data['message'] = 'Successful';
+			}
+		} else {
+			$_data['status'] = 0;
+			$_data['message'] = 'Faiure';
+		}
+		echo json_encode($_data);
+	}
+
+	public function sendcontract() {
+		$data = $this->input->post();
+		if(!empty($data)){
+			$this->load->model('jobs_model');
+			$_data['status'] = 1;
+			$_data['sendid'] = $this->jobs_model->sendcontract($data);
+			$_data['message'] = 'Successful';
+		} else {
+			$_data['status'] = 0;
+			$_data['message'] = 'Failure';
+		}
+		echo json_encode($_data);
+	}
+
+	public function receivecontract() {
+		$data = $this->input->post();
+		if(!empty($data)){
+			$this->load->model('jobs_model');
+			$r = $this->jobs_model->receivecontract($data);
+			if($r > 0){
+				$_data['status'] = 1;
+				$_data['recid'] = $this->jobs_model->receivecontract($data);
+				$_data['message'] = 'Successful';
+			} else {
+				$_data['status'] = 0;
+				$_data['message'] = 'Failure';
+			}
+		} else {
+			$_data['status'] = 0;
+			$_data['message'] = 'Failure';
+		}
+		echo json_encode($_data);
+	}
+}

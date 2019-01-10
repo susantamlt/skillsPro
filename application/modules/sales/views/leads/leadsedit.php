@@ -1,14 +1,13 @@
 
 		<section class="content">
-			<input type="hidden" name="page" id="page" value="leads" />
+			<input type="hidden" name="page" id="page" value="contractors" />
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="card">
 							<div class="header">
-								<h2>Edit Leads</h2>
+								<h2>Edit Contractor</h2>
 							</div>
-							<div id="massage"></div>
 							<div class="body">
 								<?php echo form_open_multipart('sales/leads/leads_save', array('id' =>'leads_form','name'=>'leads_form','class'=>'form-horizontal','enctype'=>'multipart/form-data','method'=>'POST')); ?>
 									<div class="form-group">
@@ -39,26 +38,26 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2"> Primary Phone No </label>
+										<label class="col-md-2"> Primary Phone </label>
 										<div class="col-md-4">
-											<input type="text" name="phone_1" id="phone_1" class="form-control" value="<?php echo $ljp_Data[0]['phone_1']; ?>" placeholder="Primary Phone No" />
+											<input type="text" name="phone_1" id="phone_1" class="form-control" value="<?php echo $ljp_Data[0]['phone_1']; ?>" placeholder="Phone One" />
 											<label id="phone_1-error" class="error" for="phone_1"></label>
 										</div>
-										<label class="col-md-2"> Primary E-mail Id </label>
+										<label class="col-md-2"> Primary E-mail </label>
 										<div class="col-md-4">
-											<input type="text" name="email_1" id="email_1" class="form-control" value="<?php echo $ljp_Data[0]['email_1']; ?>" placeholder="Primary E-mail Id" />
+											<input type="text" name="email_1" id="email_1" class="form-control" value="<?php echo $ljp_Data[0]['email_1']; ?>" placeholder="E-mail One" />
 											<label id="email_1-error" class="error" for="email_1"></label>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2"> Secondary Phone No </label>
+										<label class="col-md-2"> Secondary Phone </label>
 										<div class="col-md-4">
-											<input type="text" name="phone_2" id="phone_2" class="form-control" value="<?php echo $ljp_Data[0]['phone_2']; ?>" placeholder="Secondary Phone No" />
+											<input type="text" name="phone_2" id="phone_2" class="form-control" value="<?php echo $ljp_Data[0]['phone_2']; ?>" placeholder="Phone Two" />
 											<label id="phone_2-error" class="error" for="phone_2"></label>
 										</div>
-										<label class="col-md-2"> Secondary E-mail Id</label>
+										<label class="col-md-2"> Secondary E-mail </label>
 										<div class="col-md-4">
-											<input type="text" name="email_2" id="email_2" class="form-control" value="<?php echo $ljp_Data[0]['email_2']; ?>" placeholder="Secondary E-mail Id" />
+											<input type="text" name="email_2" id="email_2" class="form-control" value="<?php echo $ljp_Data[0]['email_2']; ?>" placeholder="E-mail Two" />
 											<label id="email_2-error" class="error" for="email_2"></label>
 										</div>
 									</div>								
@@ -115,7 +114,7 @@
 											<input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['sales_user_id']; ?>">
 											<input type="hidden" name="org_id" id="org_id" value="<?php echo $_SESSION['sales_org_id']; ?>">
 											<input type="hidden" name="contact_id" id="contact_id" value="<?php echo $ljp_Data[0]['contact_id']; ?>">
-											<button type="submit" class="btn btn-success"> Update </button>
+											<button type="submit" class="btn btn-success"> Save </button>
 											<a href="<?php echo site_url('sales/leads/') ?>" class="btn btn-default">Cancel</a>
 										</div>
 									</div>
@@ -244,14 +243,10 @@
 							success: function(res) {
 								var resD = $.parseJSON(res);
 								if(resD.status=='1'){
-									var html = '<div class="alert alert-success fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Success!</strong> The value successfully insert.</div>';
-									$('#massage').html(html);
 									window.setTimeout(function () {
 										location.href = "<?php echo site_url('sales/leads') ?>";
 									}, 5000);
 								} else { 
-									var html = '<div class="alert alert-warning fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Warning!</strong> This value already exists in the list.</div>';
-									$('#massage').html(html);
 									$('.error_msg').show();
 									$('.error_msg').html(res.message);
 								}

@@ -1,117 +1,105 @@
-		<section class="content">
-            <input type="hidden" name="page" id="page" value="requirements" />
-            <div class="container-fluid">
-            	<div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="card">                            
-                            <div class="header" style="border-bottom:none;">
-                              <h2 class="col-md-6" style="padding:0px;">Contractors List</h2>
-                              <div class="col-md-6" style="padding:0px; text-align:right;">
-                                <a href="javascript:void(0)" onclick="location.reload();" data-toggle="tooltip" class="btn btn-primary btn-background" title="Reload Page"><i class="glyphicon glyphicon-refresh"></i></a>
-                              </div>
-                            </div>
-                            <div class="body">
-                                <table id="dataManual" class="table table-bordered table-striped" style="width:100%;">
-                                  <thead>
-                                    <tr>
-                                      <th style="width:14px" class="sorting-disabled">
-                                        <input type="checkbox" id="checkbox-1-0" class="regular-checkbox" />
-                                        <label for="checkbox-1-0"></label>
-                                      </th>
-                                      <th title="Requirement Status"> Requirement Status </th>
-                                      <th title="Requirement"> Requirement </th>
-                                      <th title="No Requirement Fullfilled"> Contractor Name </th>
-                                      <th title="Proposed Hourly Rate"> Created Date </th>
-                                      <th title="Final Hourly Rate"> Final Hourly Rate </th>
-                                      <th title="Action" style="width:50px important;"> Action </th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td colspan="7" class="text-center">
-                                        <img src="<?php echo config_item('root_dir');?>assets/images/small-loader.gif">
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+    <section class="content">
+      <input type="hidden" name="page" id="page" value="requirements" />
+      <div class="container-fluid">
+      	<div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                <div class="header" style="border-bottom:none;">
+                  <h2>Assign</h2>
                 </div>
+                <div id="massage"></div>
+                <div class="body">
+                  <?php echo form_open_multipart('recruiter/requirements/source_save', array('id'=>'source_form','name'=>'source_form','class'=>'form-horizontal','enctype'=>'multipart/form-data','method'=>'POST')); ?>
+                    <div class="form-group">
+                      <label class="col-md-2"> Assign Source:<span class="mandatory" style="color: red">*</span></label>
+                      <div class="col-md-10">
+                        <?php if(!empty($sdata)){ ?>
+                          <?php echo form_dropdown('source_id',$user,$sdata[0]['source_id'],'class="form-control" id="source_id"') ?>
+                        <?php } else { ?>
+                          <?php echo form_dropdown('source_id',$user,'','class="form-control" id="source_id"') ?>
+                        <?php } ?>
+                        <label id="source_id-error" class="error" for="source_id"></label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12">
+                        <?php if(!empty($sdata)){ ?>
+                          <input type="hidden" name="ps_id" id="ps_id" value="<?php echo $sdata[0]['ps_id']; ?>" />
+                        <?php } else { ?>
+                          <input type="hidden" name="ps_id" id="ps_id" value="" />
+                        <?php } ?>
+                        <input type="hidden" name="org_id" id="org_id" value="<?php echo $_SESSION['recruiter_org_id']; ?>">
+                        <input type="hidden" name="requirement_id" id="requirement_id" value="<?php echo $id;?>">
+                        <button type="submit" class="btn btn-success"> Assign </button>
+                        <a href="<?php echo site_url('recruiter/requirements/') ?>" class="btn btn-default">Back</a>
+                      </div>
+                    </div>
+                  <?php echo form_close(); ?>
+                </div>
+              </div>
             </div>
-        </section>
-
-        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
-        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/dataTables.bootstrap.min.js"></script>
-<!-- page script -->
-<script type="text/javascript">
-  $(function () {
-    $('#dataManual').DataTable({
-      "bServerSide": true,
-      "sAjaxSource": "<?php echo site_url('recruiter/requirements/requirements_assigns'); ?>",
-      "sServerMethod": "POST",
-      "sPaginationType": "full_numbers",
-      "iDisplayLength": 10,
-      "aoColumns": [
-        {
-          "sName": "ID",
-          "bSearchable": false,
-          "bSortable": false,
-          "fnRender": function (oObj) {
-            return oObj;
+          </div>
+      </div>
+    </section>
+    <script type="text/javascript">
+      $(function() {
+        $("form[name='source_form']").validate({
+          rules: {
+            source_id: {
+              required: true,
+            },
+            org_id: {
+              required: true,
+            },
+            requirement_id: {
+              required: true,
+            },
+          },
+          messages: {
+            source_id: {
+              required: "Please enter assign  source",
+            },
+            org_id:{
+              required: "Please enter No of requirements",
+            },
+            requirement_id: {
+              required: "Please enter no of requirements fullfilled.",
+            },
+          },
+          onfocusout: function(element) {
+            this.element(element);
+          },
+          submitHandler: function(form,event){
+            event.preventDefault();// using this page stop being refreshing
+            var formData = new FormData();
+            formData.append('requirement_id', $('#requirement_id').val());
+            formData.append('org_id', $('#org_id').val());
+            formData.append('source_id', $('#source_id').val());
+            formData.append('ps_id', $('#ps_id').val());
+            $.ajax({
+              url: form.action,
+              type: form.method,
+              async:false,
+              cache:false,
+              contentType:false,
+              enctype:'multipart/form-data',
+              processData:false,
+              data: formData,
+              success: function(res) {
+                var resD = $.parseJSON(res);
+                if(resD.status=='1'){
+                  var html = '<div class="alert alert-success fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Success!</strong>'+resD.msg+'</div>';
+                  $('#massage').html(html);
+                  window.setTimeout(function () {
+                    location.href = "<?php echo site_url('recruiter/requirements') ?>";
+                  }, 2000);
+                } else {
+                var html = '<div class="alert alert-warning fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Warning!</strong> '+resD.msg+' </div>';
+                  $('#massage').html(html);
+                }
+              }
+            });
           }
-        },
-        {
-          "sName": "Name",
-          "sClass": "text-center",
-          "bSearchable": false,
-          "bSortable": true,
-          "fnRender": function (oObj) {
-              return oObj;
-          }
-        },
-        {
-          "sName": "E-mail",
-          "sClass": "text-center",
-          "bSearchable": false,
-          "bSortable": true,
-          "fnRender": function (oObj) {
-            return oObj;
-          }
-        },
-        {
-          "sName": "Moile",
-          "sClass": "text-center",
-          "bSearchable": false,
-          "bSortable": true,
-          "fnRender": function (oObj) {
-            return oObj;
-          }
-        },
-        {
-          "sName": "Image",
-          "sClass": "text-center",
-          "bSearchable": false,
-          "bSortable": true,
-          "fnRender": function (oObj) {
-            return oObj;
-          }
-        },
-        {
-          "sName": "Action",
-          "sClass": "text-center",
-          "bSearchable": false,
-          "bSortable": false,
-          "fnRender": function (oObj) {
-            return oObj;
-          }
-        }
-      ]
-    });
-  });
-</script>
-<style type="text/css">
-  #dataManual > thead > tr > th {vertical-align:middle;padding:0px 10px;}
-  #dataAuto > thead > tr > th {vertical-align:middle;padding:0px 10px;}
-  .dataTables_filter,.dataTables_paginate{float:right;}
-</style>
+        });
+      });
+    </script>

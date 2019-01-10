@@ -17,7 +17,8 @@
         		if(!in_array($row['status'], array('0','4'))){
 					$result_ary['status'] = 'success';
 					$result_ary['msg'] = 'Logged in successfully';
-					$result_ary['user_type'] = $row['type'];
+                    $result_ary['user_type'] = $row['type'];
+					$result_ary['user_id'] = $row['user_id'];
 					$loggedin_data = $this->get_logged_user_data($row);
 					$this->session->set_userdata($loggedin_data);
 				} else if($row['status']==0) {
@@ -56,6 +57,7 @@
             $loggedin_data['sales_phone'] = $row['phone'];
             $loggedin_data['sales_image'] = $row['image'];
             $loggedin_data['sales_type'] = $row['type'];
+            $loggedin_data['sales_state_role'] = $row['state_role'];
             $loggedin_data['sales_role_id'] = $row['role_id'];
             $loggedin_data['sales_user_code'] = $row['user_code'];
             $loggedin_data['sales_last_login'] = $row['last_login'];
@@ -68,6 +70,7 @@
             $loggedin_data['recruiter_phone'] = $row['phone'];
             $loggedin_data['recruiter_image'] = $row['image'];
             $loggedin_data['recruiter_type'] = $row['type'];
+            $loggedin_data['recruiter_state_role'] = $row['state_role'];
             $loggedin_data['recruiter_role_id'] = $row['role_id'];
             $loggedin_data['recruiter_user_code'] = $row['user_code'];
             $loggedin_data['recruiter_last_login'] = $row['last_login'];
@@ -80,6 +83,7 @@
             $loggedin_data['performance_phone'] = $row['phone'];
             $loggedin_data['performance_image'] = $row['image'];
             $loggedin_data['performance_type'] = $row['type'];
+            $loggedin_data['performance_state_role'] = $row['state_role'];
             $loggedin_data['performance_role_id'] = $row['role_id'];
             $loggedin_data['performance_user_code'] = $row['user_code'];
             $loggedin_data['performance_last_login'] = $row['last_login'];
@@ -92,6 +96,7 @@
             $loggedin_data['operation_phone'] = $row['phone'];
             $loggedin_data['operation_image'] = $row['image'];
             $loggedin_data['operation_type'] = $row['type'];
+            $loggedin_data['operation_state_role'] = $row['state_role'];
             $loggedin_data['operation_role_id'] = $row['role_id'];
             $loggedin_data['operation_user_code'] = $row['user_code'];
             $loggedin_data['operation_last_login'] = $row['last_login'];
@@ -104,6 +109,7 @@
             $loggedin_data['contractor_phone'] = $row['phone'];
             $loggedin_data['contractor_image'] = $row['image'];
             $loggedin_data['contractor_type'] = $row['type'];
+            $loggedin_data['contractor_state_role'] = $row['state_role'];
             $loggedin_data['contractor_role_id'] = $row['role_id'];
             $loggedin_data['contractor_user_code'] = $row['user_code'];
             $loggedin_data['contractor_last_login'] = $row['last_login'];
@@ -116,6 +122,7 @@
             $loggedin_data['clients_phone'] = $row['phone'];
             $loggedin_data['clients_image'] = $row['image'];
             $loggedin_data['clients_type'] = $row['type'];
+            $loggedin_data['clients_state_role'] = $row['state_role'];
             $loggedin_data['clients_role_id'] = $row['role_id'];
             $loggedin_data['clients_user_code'] = $row['user_code'];
             $loggedin_data['clients_last_login'] = $row['last_login'];
@@ -128,6 +135,7 @@
             $loggedin_data['user_phone'] = $row['phone'];
             $loggedin_data['user_image'] = $row['image'];
             $loggedin_data['user_type'] = $row['type'];
+            $loggedin_data['user_state_role'] = $row['state_role'];
             $loggedin_data['user_role_id'] = $row['role_id'];
             $loggedin_data['user_user_code'] = $row['user_code'];
             $loggedin_data['user_last_login'] = $row['last_login'];
@@ -140,10 +148,31 @@
             $loggedin_data['admin_phone'] = $row['phone'];
             $loggedin_data['admin_image'] = $row['image'];
             $loggedin_data['admin_type'] = $row['type'];
+            $loggedin_data['admin_state_role'] = $row['state_role'];
             $loggedin_data['admin_role_id'] = $row['role_id'];
             $loggedin_data['admin_user_code'] = $row['user_code'];
             $loggedin_data['admin_last_login'] = $row['last_login'];
         }
         return $loggedin_data;
+    }
+
+    public function registration_save($data='') {
+        $this->db->select('user_id');
+        $this->db->from('users');
+        $this->db->where('email',$data['email']);
+        $this->db->or_where('phone',$data['phone']);
+        $datas = $this->db->get()->result_array();
+        if(empty($datas)){
+            $this->db->insert('users',$data);
+            $id = 1;
+        } else {
+            $id = 2;
+        }
+        return $id;
+    }
+
+    public function ipaddress_save($data='') {
+        $this->db->insert('ip_track',$data);
+        return 0;
     }
 }

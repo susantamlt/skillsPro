@@ -83,8 +83,15 @@
                 </div>
             </div>
         </section>
-        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
+       <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
         <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/dataTables.bootstrap.min.js"></script>
+        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 <!-- page script -->
 <script type="text/javascript">
   $(function () {
@@ -184,7 +191,19 @@
             return oObj;
           }
         }
-      ]
+      ],
+       "responsive": true,
+      "dom": 'lfBrtip',
+      "buttons": [
+        { extend: 'copy', className: 'copyButton', titleAttr: 'Export to Copy' },
+        { extend: 'csv', className: 'csvButton', titleAttr: 'Export to CSV' },
+        { extend: 'excel', className: 'excelButton', titleAttr: 'Export to Excel' },
+        { extend: 'pdf', className: 'pdfButton', titleAttr: 'Export to PDF' },
+        { extend: 'print', className: 'printButton', titleAttr: 'Export to Print' }
+      ],
+      "iDisplayLength": 25,
+      "aLengthMenu": [[10,25, 50, 100, 500, -1], [10,25, 50, 100, 500, "All"]],
+      'aaSorting':[[8,'desc']]
     });
   });
   $(function (){  	
@@ -284,7 +303,19 @@
             return oObj;
           }
         }
-      ]
+      ],
+       "responsive": true,
+      "dom": 'lfBrtip',
+      "buttons": [
+        { extend: 'copy', className: 'copyButton', titleAttr: 'Export to Copy' },
+        { extend: 'csv', className: 'csvButton', titleAttr: 'Export to CSV' },
+        { extend: 'excel', className: 'excelButton', titleAttr: 'Export to Excel' },
+        { extend: 'pdf', className: 'pdfButton', titleAttr: 'Export to PDF' },
+        { extend: 'print', className: 'printButton', titleAttr: 'Export to Print' }
+      ],
+      "iDisplayLength": 25,
+      "aLengthMenu": [[10,25, 50, 100, 500, -1], [10,25, 50, 100, 500, "All"]],
+      'aaSorting':[[8,'desc']]
     });
   });
 </script>

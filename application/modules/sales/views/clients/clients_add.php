@@ -12,7 +12,7 @@
 							<div class="body">
 								<?php echo form_open_multipart('sales/clients/clients_save', array('id' =>'clients_form','name'=>'clients_form','class'=>'form-horizontal','enctype'=>'multipart/form-data','method'=>'POST')); ?>
 									<div class="form-group">
-										<label class="col-md-2"> Contact Name :</label>
+										<label class="col-md-2"> Contact Name :<span class="mandatory" style="color:red">*</span></label>
 										<div class="col-md-4">
 											<input type="text" name="contact_name" id="contact_name" class="form-control" value="" placeholder="Contact Name" />
 											<label id="contact_name-error" class="error" for="contact_name"></label>
@@ -24,27 +24,39 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2"> Primary Phone:</label>
+										<label class="col-md-2"> Primary Phone :<span class="mandatory" style="color:red">*</span></label>
 										<div class="col-md-4">
 											<input type="text" name="phone_1" id="phone_1" class="form-control" value="" placeholder="Primary Phone" />
 											<label id="phone_1-error" class="error" for="phone_1"></label>
 										</div>
-										<label class="col-md-2"> Secondary Phone: </label>
+										<label class="col-md-2"> Secondary Phone : </label>
 										<div class="col-md-4">
 											<input type="text" name="phone_2" id="phone_2" class="form-control" value="" placeholder="Secondary Phone" />
 											<label id="phone_2-error" class="error" for="phone_2"></label>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2"> Primary E-mail: </label>
+										<label class="col-md-2"> Primary E-mail : <span class="mandatory" style="color:red">*</span></label>
 										<div class="col-md-4">
 											<input type="text" name="email_1" id="email_1" class="form-control" value="" placeholder="E-mail One" />
 											<label id="email_1-error" class="error" for="email_1"></label>
 										</div>
-										<label class="col-md-2"> Secondary E-mail </label>
+										<label class="col-md-2"> Secondary E-mail :</label>
 										<div class="col-md-4">
 											<input type="text" name="email_2" id="email_2" class="form-control" value="" placeholder="E-mail Two" />
 											<label id="email_2-error" class="error" for="email_2"></label>
+										</div>
+									</div>
+									<div class="form-group">
+									<label class="col-md-2"> Address :<span class="mandatory" style="color:red">*</span></label>
+										<div class="col-md-4">
+											<textarea name="address" id="address" class="form-control" placeholder="street no, city, state, country"></textarea>
+											<label id="address-error" class="error" for="address"></label>
+										</div>
+										<label class="col-md-2">Zip/Post Code :<span class="mandatory" style="color:red">*</span></label>
+										<div class="col-md-4">
+											<input type="text" name="zip_code" id="zip_code" class="form-control" value="" placeholder="Zip/Post Code" />
+											<label id="zip_code_error" class="error" for="zip_code"></label>
 										</div>
 									</div>
 									<div class="form-group">
@@ -53,22 +65,22 @@
 											<input type="text" name="department" id="department" class="form-control" value="" placeholder="Department" />
 											<label id="department-error" class="error" for="department"></label>
 										</div>
-										<label class="col-md-2"> Fax No: </label>
+										<label class="col-md-2"> Fax No : </label>
 										<div class="col-md-4">
 											<input type="text" name="fax" id="fax" class="form-control" value="" placeholder="Fax" />
 											<label id="email_2-error" class="error" for="email_2"></label>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2"> Job Title: </label>
+										<label class="col-md-2"> Job Title : </label>
 										<div class="col-md-4">
 											<input type="text" name="job_title" id="job_title" class="form-control" value="" placeholder="Job Title" />
 											<label id="job_title-error" class="error" for="job_title"></label>
 										</div>
-										<label class="col-md-2"> Address: </label>
+										<label class="col-md-2"> Linkedin : </label>
 										<div class="col-md-4">
-											<textarea name="address" id="address" class="form-control" placeholder="street no, city, state, country, zip/postcode"></textarea>
-											<label id="address-error" class="error" for="address"></label>
+											<input type="text" name="linkedin" id="linkedin" class="form-control" value="" placeholder="Linkedin" />
+											<label id="linkedin-error" class="error" for="linkedin"></label>
 										</div>
 									</div>
 									<div class="form-group">
@@ -77,19 +89,14 @@
 											<input type="text" name="skype_id" id="skype_id" class="form-control" value="" placeholder="Skype Id" />
 											<label id="skype_id-error" class="error" for="skype_id"></label>
 										</div>
-										<label class="col-md-2"> Twitter: </label>
+										<label class="col-md-2"> Twitter : </label>
 										<div class="col-md-4">
 											<input type="text" name="twitter" id="twitter" class="form-control" value="" placeholder="Twitter" />
 											<label id="twitter-error" class="error" for="twitter"></label>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2"> Linkedin: </label>
-										<div class="col-md-4">
-											<input type="text" name="linkedin" id="linkedin" class="form-control" value="" placeholder="Linkedin" />
-											<label id="linkedin-error" class="error" for="linkedin"></label>
-										</div>
-										<label class="col-md-2"> Website: </label>
+										<label class="col-md-2"> Website : </label>
 										<div class="col-md-4">
 											<input type="text" name="website" id="website" class="form-control" value="" placeholder="Website Url" />
 											<label id="website-error" class="error" for="website"></label>
@@ -166,7 +173,13 @@
 						},
 						 fax:{
 							regex: /^\+?[0-9]+$/,
-                         },		
+                         },	
+                         zip_code :{
+                         	required:true,
+                         	number: true,
+                         	minlength:4,
+                         	maxlength:10,
+                         },	
 						
 					},
 					messages: {
@@ -201,7 +214,13 @@
 							regex:"Please enter valid Url"
 						},
 						address: {
-							required:"Please Enter your address with Post code"
+							required:"Please Enter your address "
+						},
+						zip_code:{
+							required:"Please enter Zip/Post Code",
+							number:"Special character and letter not allowed",
+							minlength:"Enter minimum 4 digits",
+							maxlength:"You can enter maximum 10 digits"
 						},
 						fax: {
 							regex: "Please enter valid Fax-No"
@@ -231,6 +250,7 @@
 						formData.append('fax', $('#fax').val());
 						formData.append('job_title', $('#job_title').val());
 						formData.append('address', $('#address').val());
+						formData.append('zip_code', $('#zip_code').val());
 						formData.append('skype_id', $('#skype_id').val());
 						formData.append('twitter', $('#twitter').val());
 						formData.append('linkedin', $('#linkedin').val());

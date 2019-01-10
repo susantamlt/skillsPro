@@ -104,7 +104,7 @@
 									</div>
 									<div class="form-group demo-masked-input">
 										<label class="col-md-2"> Experence Rating: </label>
-										<div class="col-md-4">
+										<div class="col-md-6">
 											<div class='starrr' id='star3'></div>
 											<input type="hidden" name="experience_rating" id="experience_rating" class="form-control" value="" placeholder="Experience Rating" />
 											<label id="experience_rating_error" class="error" for="experience_rating"></label>
@@ -149,7 +149,7 @@
 						},
 						experience:{
 							required:true,
-							number:true,
+							number:false,
 						},
 						address: {
 							required:true,

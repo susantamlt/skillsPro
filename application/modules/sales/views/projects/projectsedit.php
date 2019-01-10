@@ -14,60 +14,60 @@
 									<fieldset>
 										<legend><?php echo $urlname; ?> Opening Information </legend>
 										<div class="form-group">
-											<label class="col-md-2"> <?php echo $urlname; ?> Title <span class="mandatory">*</span></label>
+											<label class="col-md-2"> <?php echo $urlname; ?> Title <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="prospect_title" id="prospect_title" class="form-control" value="<?php echo $jobs[0]['prospect_title']; ?>" placeholder="<?php echo $urlname; ?> Title" />
 												<label id="prospect_title-error" class="error" for="prospect_title"></label>
 											</div>
-											<label class="col-md-2"> Client Name <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Client Name <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('client_id',$ljp_clients,$jobs[0]['client_id'],'class="form-control" id="client_id"') ?>
 												<label id="client_id-error" class="error" for="client_id"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2"> Date Opened <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Date Opened <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="date_of_prospect" id="date_of_prospect" class="form-control datepicker" value="<?php echo date('d/m/Y',strtotime($jobs[0]['date_of_prospect'])); ?>" placeholder="dd/mm/yyyy" />
 												<label id="date_of_prospect-error" class="error" for="date_of_prospect"></label>
 											</div>
-											<label class="col-md-2"> Target Date <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Target Date <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="expected_date" id="expected_date" class="form-control datepicker" value="<?php echo date('d/m/Y',strtotime($jobs[0]['expected_date'])); ?>" placeholder="dd/mm/yyyy" />
 												<label id="expected_date-error" class="error" for="expected_date"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2"> <?php echo $urlname; ?> Type <span class="mandatory">*</span></label>
+											<label class="col-md-2"> <?php echo $urlname; ?> Type <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('lead_type',$ljp_leadtype,$jobs[0]['lead_type'],'class="form-control" id="lead_type"') ?>
 												<label id="lead_type-error" class="error" for="lead_type"></label>
 											</div>
-											<label class="col-md-2"> <?php echo $urlname; ?> Status <span class="mandatory">*</span></label>
+											<label class="col-md-2"> <?php echo $urlname; ?> Status <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('lead_status',$ljp_status,$jobs[0]['lead_status'],'class="form-control" id="lead_status"') ?>
 												<label id="lead_status-error" class="error" for="lead_status"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2"> Country <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Country <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('country_code',$ljp_country,$jobs[0]['country_code'],'class="form-control" id="country_code"') ?>
 												<label id="country_code-error" class="error" for="country_code"></label>
 											</div>
-											<label class="col-md-2"> State/Province <span class="mandatory">*</span></label>
+											<label class="col-md-2"> State/Province <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('state_code',$ljp_state,$jobs[0]['state_code'],'class="form-control" id="state_code"') ?>
 												<label id="state_code-error" class="error" for="state_code"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2"> City <span class="mandatory">*</span></label>
+											<label class="col-md-2"> City <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('city_id',$ljp_city,$jobs[0]['city_id'],'class="form-control" id="city_id"') ?>
 												<label id="city_id-error" class="error" for="city_id"></label>
 											</div>
-											<label class="col-md-2"> Zip/Postal Code <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Zip/Postal Code <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="zip_code" id="zip_code" class="form-control" value="<?php echo $jobs[0]['zip_code']; ?>" placeholder="Zip/Postal Code" />
 												<label id="zip_code-error" class="error" for="zip_code"></label>
@@ -102,14 +102,14 @@
 									<fieldset>
 										<legend>Description Information </legend>
 										<div class="form-group">
-											<label class="col-md-12"> <?php echo $urlname; ?> Description <span class="mandatory">*</span></label>
+											<label class="col-md-12"> <?php echo $urlname; ?> Description <span class="mandatory"style="color: red">*</span></label>
 											<div class="col-md-12">
 												<textarea name="prospect_description" id="prospect_description" class="form-control"><?php echo $jobs[0]['prospect_description']; ?></textarea>
 												<label id="j_title-error" class="error" for="j_title"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-12"> Technical Requirements <span class="mandatory">*</span></label>
+											<label class="col-md-12"> Technical Requirements <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-12">
 												<textarea name="requirements_details" id="requirements_details" class="form-control"><?php echo $jobs[0]['requirements_details']; ?></textarea>
 												<label id="requirements_details-error" class="error" for="requirements_details"></label>
@@ -150,14 +150,14 @@
 						<?php echo form_open_multipart('sales/projects/projects_comment_save', array('id' =>'jobs_Comment','name'=>'jobs_Comment','class'=>'form-horizontal','enctype'=>'multipart/form-data','method'=>'POST')); ?>
 							<div class="modal-body">
 								<div class="form-group">
-									<label class="col-md-4"> Stage of Project <span class="mandatory">*</span></label>
+									<label class="col-md-4"> Stage of Project <span class="mandatory" style="color: red">*</span></label>
 									<div class="col-md-8">
 										<?php echo form_dropdown('stage_of_prospect',$ljp_projectStage,'','class="form-control" id="stage_of_prospect"') ?>
 										<label id="stage_of_prospect-error" class="error" for="stage_of_prospect"></label>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-4"> Comment <span class="mandatory">*</span></label>
+									<label class="col-md-4"> Comment <span class="mandatory" style="color: red">*</span></label>
 									<div class="col-md-8">
 										<textarea name="comment" id="comment" class="form-control"></textarea>
 										<label id="comment-error" class="error" for="comment"></label>
@@ -183,14 +183,14 @@
 						<?php echo form_open_multipart('sales/projects/projects_file_save', array('id' =>'jobs_file','name'=>'jobs_file','class'=>'form-horizontal','enctype'=>'multipart/form-data','method'=>'POST')); ?>
 							<div class="modal-body">
 								<div class="form-group">
-									<label class="col-md-4"> Name of the File <span class="mandatory">*</span></label>
+									<label class="col-md-4"> Name of the File <span class="mandatory" style="color: red">*</span></label>
 									<div class="col-md-8">
 										<input type="text" name="pfile_name" id="pfile_name" value="" placeholder="File Name">
 										<label id="pfile_name-error" class="error" for="pfile_name"></label>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-4"> File <span class="mandatory">*</span></label>
+									<label class="col-md-4"> File <span class="mandatory" style="color: red">*</span></label>
 									<div class="col-md-8">
 										<input type="file" name="documentfile" id="documentfile" value="" placeholder="File">
 										<label id="documentfile-error" class="error" for="documentfile"></label>

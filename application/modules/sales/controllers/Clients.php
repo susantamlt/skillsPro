@@ -109,6 +109,27 @@ class Clients extends MX_Controller
 		}
 		echo json_encode($_data);
 	}
+		public function clients_viewList($id='') {
+		$this->load->model('clients_model');
+        $result = $this->clients_model->get_ljp_historyView($id);
+        $Status = array('FA'=>'Fullfilled','PF'=>'Partially Filled','VA'=>'Vacant');
+		$aaData = array();
+		foreach($result['aaData'] as $row){
+			if($row[1]!=''){
+				$row[1]= ucwords($row[1]);
+			}
+			if($row[2]!=''){
+				$row[2]= ucwords($Status[$row[2]]);
+			}
+			if($row[3]!=''){
+				$row[3]= date('jS M Y', strtotime($row[3]));
+			}
+			$row[0] = '<input type="checkbox" id="checkbox-1-' . intval($row[0]) . '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $row[0] . '"/><label for="checkbox-1-' . intval($row[0]) . '"></label>';
+			$aaData[] = $row;
+		}
+		$result['aaData'] = $aaData;
+		print_r(json_encode($result));
+	}
 
 
 }

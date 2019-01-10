@@ -22,7 +22,7 @@
 			"$tableName4.state",
 			"$tableName.date_of_prospect",
 		);
-		$indexId     = '$tableName.prospect_id';
+		$indexId     = "$tableName.prospect_id";
 		$columnOrder = "$tableName.prospect_id";
 		$orderby     = "";
 		$joinMe      = "left join $tableName1 on $tableName1.prospect_type_id=$tableName.prospect_type_id left join $tableName2 on $tableName2.client_id=$tableName.org_id left join $tableName3 on $tableName3.org_id=$tableName.org_id left join $tableName4 on $tableName4.state_code=$tableName.state_code";
@@ -48,7 +48,7 @@
 			"$tableName4.state",
 			"$tableName.date_of_prospect",
 		);
-		$indexId     = '$tableName.prospect_id';
+		$indexId     = "$tableName.prospect_id";
 		$columnOrder = "$tableName.prospect_id";
 		$orderby     = "";
 		$joinMe      = "left join $tableName1 on $tableName1.prospect_type_id=$tableName.prospect_type_id left join $tableName2 on $tableName2.client_id=$tableName.org_id left join $tableName3 on $tableName3.org_id=$tableName.org_id left join $tableName4 on $tableName4.state_code=$tableName.state_code";

@@ -16,9 +16,10 @@
 			"$tableName.email_1",
 			"$tableName.phone_1",
 			"$tableName.address",
+			"$tableName.contract_type",
 			"$tableName.created_at",
 		);
-		$indexId     = '$tableName.contact_id';
+		$indexId     = "$tableName.contact_id";
 		$columnOrder = "$tableName.contact_id";
 		$orderby     = "";
 		$joinMe      = "left join $tableName1 on $tableName1.prospect_type_id=$tableName.type_id";
@@ -38,9 +39,10 @@
 			"$tableName.email_1",
 			"$tableName.phone_1",
 			"$tableName.address",
+			"$tableName.contract_type",
 			"$tableName.created_at",
 		);
-		$indexId     = '$tableName.contact_id';
+		$indexId     = "$tableName.contact_id";
 		$columnOrder = "$tableName.contact_id";
 		$orderby     = "";
 		$joinMe      = "left join $tableName1 on $tableName1.prospect_type_id=$tableName.type_id";
@@ -123,6 +125,7 @@
 		$this->db->select('prospect_type_id,prospect_type');
 		$this->db->from('prospect_type');
 		$this->db->where('cat_id',$date['cat_id']);
+		$this->db->where('status','1');
 		$datas = $this->db->get()->result_array();
 		$dataState = array(''=>'--Select One--');
 		foreach($datas as $_data):
@@ -135,6 +138,7 @@
 		$this->db->select('prospect_type_id,prospect_type');
 		$this->db->from('prospect_type');
 		$this->db->where('cat_id',$date);
+		$this->db->where('status','1');
 		$datas = $this->db->get()->result_array();
 		$dataState = array(''=>'--Select One--');
 		foreach($datas as $_data):
@@ -173,7 +177,77 @@
 		}
 		return implode(',',$data);
 	}
-	
+	public function sendcontract($date='') {
+		# code...
+	}
+
+	public function receivecontract($date='') {
+		$this->db->select('c.*');
+		$this->db->from('contacts as c');
+		$this->db->where('c.contact_id',$date['id']);
+		$pfdata = $this->db->get()->result_array();
+		if(!empty($pfdata)){
+			$_pfdata = $pfdata[0];
+			$this->db->select('client_id');
+			$this->db->from('clients');
+			$this->db->where('phone_1',$_pfdata['phone_1']);
+			$this->db->where('email_1',$_pfdata['email_1']);
+			$cldata = $this->db->get()->result_array();
+			if(!empty($cldata)){
+				$_pfdata1 = $pfdata[0];
+				$_pfdata1['old_id']=$_pfdata1['contact_id'];
+				unset($_pfdata1['contact_id']);
+				unset($_pfdata1['mnu_autp']);
+				unset($_pfdata1['contract_type']);
+				$this->db->where('client_id',$cldata[0]['client_id']);
+				$this->db->update('clients', $_pfdata1);
+				$rdate['client_id'] = $cldata[0]['client_id'];
+			} else {
+				$_pfdata2 = $pfdata[0];
+				$_pfdata2['old_id']=$_pfdata2['contact_id'];
+				unset($_pfdata2['contact_id']);
+				unset($_pfdata2['mnu_autp']);
+				unset($_pfdata2['contract_type']);
+				$this->db->insert('clients',$_pfdata2);
+				$rdate['client_id'] = $this->db->insert_id();
+				return 1;
+			}
+		} else {
+			return 0;
+		}
+	}
+	public function leads_file_save($date='') {
+		if(isset($date['contact_id']) && $date['contact_id']!=''){
+			$id = $date['contact_id'];
+			unset($date['contact_id']);
+			$this->db->where_in('contact_id',$id);
+			$this->db->update('contacts', $date);
+		} else { 
+			$this->db->insert('contacts',$date);
+			$id = $this->db->insert_id();
+		}
+		return $id;
+	}
+	public function get_ljp_leadsource() {
+		$this->db->select('lead_source');
+		$this->db->from('lead_source');
+		$datas = $this->db->get()->result_array();
+		$dataSource = array(''=>'--Select One--');
+		foreach($datas as $_data):
+			$dataSource[$_data['lead_source']] = $_data['lead_source'];
+		endforeach;
+		return $dataSource;
+	}
+	public function get_ljp_leadstatus() {
+		$this->db->select('status');
+		$this->db->from('lead_status');
+		$datas = $this->db->get()->result_array();
+		$dataStatus = array(''=>'--Select One--');
+		foreach($datas as $_data):
+			$dataStatus[$_data['status']] = $_data['status'];
+		endforeach;
+		return $dataStatus;
+	}
  
 }
 

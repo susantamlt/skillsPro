@@ -11,84 +11,93 @@
 							<div class="body">
 								<?php echo form_open_multipart('sales/clients/clients_save', array('id'=>'clients_form','name'=>'clients_form','class'=>'form-horizontal','enctype'=>'multipart/form-data','method'=>'POST')); ?>
 									<div class="form-group">
-										<label class="col-md-2"> Contact Name </label>
+										<label class="col-md-2"> Contact Name :<span class="mandatory" style="color:red">*</span></label>
 										<div class="col-md-4">
 										    <input type="text" name="contact_name" id="contact_name" class="form-control" value="<?php echo $ljp_data[0]['contact_name']; ?>" placeholder="Contact Name" />
 											<label id="contact_name-error" class="error" for="contact_name"></label>
 										</div>
-										<label class="col-md-2">Decision Maker Name</label>
+										<label class="col-md-2">Decision Maker Name :</label>
 										<div class="col-md-4">
 											<input type="text" name="decision_maker_name" id="decision_maker_name" class="form-control" value="<?php echo $ljp_data[0]['decision_maker_name']; ?>" placeholder="Decision Maker Name" />
 											<label id="decision_maker_name-error" class="error" for="dicision_maker_name"></label>
 										</div>
 									</div>	
 									<div class="form-group">
-										<label class="col-md-2"> Primary Phone Number</label>
+										<label class="col-md-2"> Primary Phone Number :<span class="mandatory" style="color:red">*</span></label>
 										<div class="col-md-4">
 											<input type="text" name="primary_phone_no" id="primary_phone_no" class="form-control" value="<?php echo $ljp_data[0]['phone_1']; ?>" placeholder="Phone No 1" />
 											<label id="primary_phone_no-error" class="error" for="primary_phone_no"></label>
 										</div>
-										<label class="col-md-2"> Secondary Phone number </label>
+										<label class="col-md-2"> Secondary Phone number : </label>
 										<div class="col-md-4">
 											<input type="text" name="secondary_phone_no" id="secondary_phone_no" class="form-control" value="<?php echo $ljp_data[0]['phone_2']; ?>" placeholder="Phone No 2" />
 											<label id="secondary_phone_no-error" class="error" for="secondary_phone_no"></label>
 										</div>
 									</div>	
 									<div class="form-group">
-										<label class="col-md-2"> Primary Email-ID </label>
+										<label class="col-md-2"> Primary Email-ID :<span class="mandatory" style="color:red">*</span></label>
 										<div class="col-md-4">
 											<input type="text" name="primary_email" id="primary_email" class="form-control" value="<?php echo $ljp_data[0]['email_1']; ?>" placeholder="Primary Email-ID" />
 											<label id="primary_email-error" class="error" for="primary_email"></label>
 										</div>
-										<label class="col-md-2"> Secoundary Email-ID </label>
+										<label class="col-md-2"> Secoundary Email-ID : </label>
 										<div class="col-md-4">
 											<input type="text" name="secoundary_email" id="secoundary_email" class="form-control" value="<?php echo $ljp_data[0]['email_2']; ?>" placeholder="Secoundary Email-ID" />
 											<label id="secoundary_email-error" class="error" for="secoundary_email"></label>
 										</div>
 									</div>	
 									<div class="form-group">
-										<label class="col-md-2"> Depertment Name </label>
+										<label class="col-md-2"> Address :<span class="mandatory" style="color:red">*</span> </label>
+										<div class="col-md-4">
+											<input type="text" name="address" id="address" class="form-control" value="<?php echo $ljp_data[0]['address']; ?>" placeholder="Address" />
+											<label id="address-error" class="error" for="address"></label>
+										</div>
+										<label class="col-md-2"> Zip/Post Code :<span class="mandatory" style="color:red">*</span></label>
+                                         <div class="col-md-4"> 
+                                           <input type="text" name="zip_code" id="zip_code" class="form-control" value="<?php echo $ljp_data[0]['zip_code']; ?>" placeholder="zip/post code" />
+											<label id="zip_code_error" class="error" for="zip_code"></label>
+                                         </div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2"> Depertment Name :</label>
 										<div class="col-md-4">
 											<input type="text" name="depertment_name" id="depertment_name" class="form-control" value="<?php echo $ljp_data[0]['department']; ?>" placeholder="Depertment Name" />
 											<label id="depertment_name-error" class="error" for="depertment_name"></label>
 										</div>
-										<label class="col-md-2">Fax Number </label>
+										<label class="col-md-2">Fax Number : </label>
 										<div class="col-md-4">
 											<input type="text" name="fax_no" id="fax_no" class="form-control" value="<?php echo $ljp_data[0]['fax']; ?>" placeholder="Fax  Number"/>
 											<label id="fax_no-error" class="error" for="fax_no"></label>
 										</div>
 									</div>	
 									<div class="form-group">
-										<label class="col-md-2"> Job Title </label>
+										<label class="col-md-2"> Job Title :</label>
 										<div class="col-md-4">
 											<input type="text" name="job_titlt" id="job_titlt" class="form-control" value="<?php echo $ljp_data[0]['job_title']; ?>" placeholder="Job Title" />
 											<label id="job_titlt-error" class="error" for="job_titlt"></label>
 										</div>
-										<label class="col-md-2"> Address </label>
+										<label class="col-md-2"> Linkedin :</label>
 										<div class="col-md-4">
-											<input type="text" name="address" id="address" class="form-control" value="<?php echo $ljp_data[0]['address']; ?>" placeholder="Address" />
-											<label id="address-error" class="error" for="address"></label>
+											<input type="text" name="linkedin" id="linkedin" class="form-control" value="<?php echo $ljp_data[0]['linkedin']; ?>" placeholder="Linkedin" />
+											<label id="linkedin-error" class="error" for="linkedin"></label>
 										</div>
+										
 									</div>	
 									<div class="form-group">
-										<label class="col-md-2">Skype ID </label>
+										<label class="col-md-2">Skype ID : </label>
 										<div class="col-md-4">
 											<input type="text" name="skype_id" id="skype_id" class="form-control" value="<?php echo $ljp_data[0]['skype_id']; ?>" placeholder="Skype ID" />
 											<label id="skype_id-error" class="error" for="skype_id"></label>
 										</div>
-										<label class="col-md-2"> Twitter ID </label>
+										<label class="col-md-2"> Twitter ID : </label>
 										<div class="col-md-4">
 											<input type="text" name="twitter_id" id="twitter_id" class="form-control" value="<?php echo $ljp_data[0]['twitter']; ?>" placeholder="Twitter ID" />
 											<label id="twitter_id-error" class="error" for="twitter_id"></label>
 										</div>
 									</div>	
 									<div class="form-group">
-										<label class="col-md-2"> Linkedin </label>
-										<div class="col-md-4">
-											<input type="text" name="linkedin" id="linkedin" class="form-control" value="<?php echo $ljp_data[0]['linkedin']; ?>" placeholder="Linkedin" />
-											<label id="linkedin-error" class="error" for="linkedin"></label>
-										</div>
-										<label class="col-md-2"> Website Address </label>
+										
+										<label class="col-md-2"> Website Address :</label>
 										<div class="col-md-4">
 											<input type="text" name="Website_address" id="Website_address" class="form-control" value="<?php echo $ljp_data[0]['website']; ?>" placeholder="Website Address" />
 											<label id="Website_address-error" class="error" for="Website_address"></label>
@@ -169,7 +178,13 @@
                          Website_address: {
 							required:false,
                              regex:/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
-						},				    
+						},
+						 zip_code :{
+                         	required:true,
+                         	number: true,
+                         	minlength:4,
+                         	maxlength:10,
+                         },					    
 					},
 					messages: {
 						contact_name: {
@@ -216,7 +231,13 @@
 						},
 						Website_address : {
 							regex:"Please Enter valid Url"
-						}
+						},
+						zip_code:{
+							required:"Please enter Zip/Post Code",
+							number:"Special character and letter not allowed",
+							minlength:"Enter minimum 4 digits",
+							maxlength:"You can enter maximum 10 digits"
+						},
 					},
 					onfocusout: function(element) {
 						this.element(element);
@@ -235,6 +256,7 @@
 						formData.append('fax', $('#fax_no').val());
 						formData.append('job_title', $('#job_titlt').val());
 						formData.append('address', $('#address').val());
+						formData.append('zip_code', $('#zip_code').val());
 						formData.append('skype_id', $('#skype_id').val());
 						formData.append('twitter', $('#twitter_id').val());
 						formData.append('linkedin', $('#linkedin').val());

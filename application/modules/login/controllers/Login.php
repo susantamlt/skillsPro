@@ -33,7 +33,7 @@ class Login extends MX_Controller
 				switch($res['user_type']) {
 					case 0: $go_to = 'admin/dashboard'; break;
 					case 1: $go_to = 'users/dashboard';  break;
-					case 2: $go_to = 'sales/dashboard'; break;
+					case 2: $go_to = 'sales/jobs'; break;
 					case 3: $go_to = 'recruiter/dashboard'; break;
 					case 4: $go_to = 'performance/dashboard'; break;
 					case 5: $go_to = 'operation/dashboard'; break;
@@ -44,6 +44,8 @@ class Login extends MX_Controller
 				$data['info_msg'] = 'Successfully logged in.';
 				$data['status'] = 1;
 				$data['go_to'] = $go_to;
+				$newIpAddress = array('user_id'=>$res['user_id'],'ip_address'=>$_SERVER['REMOTE_ADDR'],'login_time'=>date('Y-m-d H:i:s'));
+				$this->Login_model->ipaddress_save($newIpAddress);
 			}
 		} else {
 			$data['errmsg'] =  'Invalid Login id or Password.';
@@ -269,5 +271,31 @@ class Login extends MX_Controller
 			exit();
 		}
 	}
-
+	public function registration_save() {
+		$this->load->model('login_model');
+		$data = $this->input->post();
+		$_data = array('status'=>1,'message'=>'');
+		if(!empty($data)){
+			$data['password'] = md5($data['password']);
+			$data['role_id'] = '1';
+			$data['status'] = '1';
+			$data['user_code'] = strtoupper(md5(strtotime(date('y-m-d H:i:s')) + rand(10,100)));;
+			$data['activation_key'] = strtoupper(md5(strtotime(date('y-m-d H:i:s')) + rand(100,999)));
+			if($_data['status'] > 0){
+				$_dataR = $this->login_model->registration_save($data);
+				if($_dataR==2){
+					$_data['status'] = 0;
+					$_data['msg'] = ' The data already exits';
+				} else if($_dataR==1){
+					$_data['status'] = 1;
+					$_data['msg'] = 'The data successfully insert';
+				} 
+			}
+		} else {
+			$_data['status'] = 0;
+			$_data['msg'] = 'Faillure';
+		}
+		echo json_encode($_data);
+	}
+		
 }

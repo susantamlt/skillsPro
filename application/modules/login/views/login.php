@@ -35,6 +35,7 @@
             <div class="body">
                 <form method="POST" name="sign_in" id="sign_in" action="<?php echo config_item('base_url');?>login/userlogin/">
                     <div class="msg">Sign in to start your session</div>
+                    <div id="massage"></div>
                     <input type="hidden" name="type" value="<?php echo $type; ?>" >
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -65,7 +66,7 @@
                     </div>
                     <div class="row m-t-15 m-b--20">
                         <div class="col-xs-6">
-                            <!-- <a href="<?php echo config_item('base_url');?>login/register/">Register Now!</a> -->
+                             <a href="<?php echo config_item('base_url');?>login/register/">New Registration!</a>
                         </div>
                         <div class="col-xs-6 align-right">
                             <a href="<?php echo config_item('base_url');?>login/forgot_password/">Forgot Password?</a>
@@ -125,15 +126,20 @@
                 data: $(form).serialize(),
                 success: function(response) {
                     var res = JSON.parse(response);
-                    if(res.status==1){
+                   if(res.status==1){
+                        var html = '<div class="alert alert-success fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Successfully Login</strong></div>';
+                        $('#massage').html(html);
                         var urlnew = "<?php echo config_item('base_url');?>" + res.go_to;
                         window.location.href = urlnew;
-                    }
+                    }else { 
+                        var html = '<div class="alert alert-danger fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Please cheak your Emailid or Password</strong></div>';
+                             $('#massage').html(html);
+                            }
+                        }
+                   });
                 }
-            });
-        }
-    });
-  });
+           });
+        });
 </script>
 </body>
 

@@ -9,10 +9,11 @@ class Indeed extends CI_Controller
 	public function index() {
 		$client = new Indeedapi("444214432879792");
 		$params = array(
-			"q" => "Landscaper",
-			"l" => "New York",
+			"q" => "General Labor",
+			"l" => "Birmingham, AL",
 			"userip" => "1.2.3.4",
 			"useragent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2)",
+			"date" => date('Y-m-d'),
 			'start' => 1,
 			'limit' => 100,
 			'co'=>'US'

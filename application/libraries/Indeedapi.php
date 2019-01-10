@@ -9,11 +9,13 @@
  * @license  http://opensource.org/licenses/MIT
  * @version  1.0.0
  */
+ini_set('max_execution_time', 0); 
 class Indeedapi {
     const DEFAULT_FORMAT = "json";
     const API_SEARCH_ENDPOINT = "http://api.indeed.com/ads/apisearch";//https://auth.indeed.com/search
     const API_JOBS_ENDPOINT = "http://api.indeed.com/ads/apigetjobs";//https://auth.indeed.com/jobs
     const API_RESUMES_ENDPOINT = "https://auth.indeed.com/resumes";//https://auth.indeed.com/resumes
+    const API_RESUMESD_ENDPOINT = "https://auth.indeed.com/resumes/full";//https://auth.indeed.com/resumes
     private static $API_SEARCH_REQUIRED = array("userip", "useragent", array("q", "l"));
     private static $API_RESUMES_REQUIRED = array("userip", "useragent", array("q", "l"));
     private static $API_JOBS_REQUIRED = array("jobkeys");
@@ -31,11 +33,21 @@ class Indeedapi {
         $v='2';
         return $this->process_request(self::API_JOBS_ENDPOINT, $valid_args,$v);
     }
+
+    public function auth($value='') {
+        # code...
+    }
+
     public function resumes($args){
+        $args['client_id']='ace1296b647854a22301a765df49dc7e7061f045dda708afbbd49101b73fe641';
         $v='1';
+
+        //print_r($args);
         return $this->process_request(self::API_RESUMES_ENDPOINT, $args,$v);
     }
     public function resume($args){
+        $args['client_id']='ace1296b647854a22301a765df49dc7e7061f045dda708afbbd49101b73fe641';
+        //$args['access_token']='vQjiLKQzmwc';
         $v='1';
         return $this->process_request(self::API_RESUMES_ENDPOINT, $args,$v);
     }

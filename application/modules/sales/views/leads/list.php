@@ -18,65 +18,63 @@
                                           <a href="<?php echo site_url('sales/leads/leads_add') ?>" data-toggle="tooltip" title="Add New Record" class="btn btn-success btn-background"><i class="glyphicon glyphicon-plus"></i></a>
                                            <a href="<?php echo site_url('sales/leads/leadsimport') ?>" data-toggle="tooltip" title="Import Leads" class="btn btn-success btn-background"><i class="glyphicon glyphicon-import"></i></a>
                                         </div>
-                                        <div class="table-responsive">
-                                          <table id="dataManual" class="table table-bordered table-striped table-hover dataTable js-exportable" style="width:100%;">
-                      											<thead>
-                      												<tr>
-                      													<th style="width:18px" class="sorting-disabled">
-                      														<input type="checkbox" id="checkbox-1-0" class="regular-checkbox" />
-                      														<label for="checkbox-1-0"></label>
-                      													</th>
-                                                <th title="Name"> Name </th>
-                                                <th title="Contact Name"> Contact Name </th>
-                                                <th title="Industry"> Industry </th>
-                                                <th title="E-mail"> E-mail </th>
-                                                <th title="Phone"> Phone </th>
-                                                <th title="Address"> Address </th>
-                                                <th title="Created Date"> Date </th>
-                                                <th title="Action"> Action </th>
-                      												</tr>
-                      											</thead>
-                      											<tbody>
-                      												<tr>
-                      													<td colspan="10" class="text-center">
-                      														<img src="<?php echo config_item('assets_dir');?>images/small-loader.gif">
-                      													</td>
-                      												</tr>
-                    											  </tbody>
-                    										  </table>
-                                        </div>
+                                        <table id="dataManual" class="table table-bordered table-striped" style="width:100%;">
+                  											<thead>
+                  												<tr>
+                  													<th style="width:18px" class="sorting-disabled">
+                  														<input type="checkbox" id="checkbox-1-0" class="regular-checkbox" />
+                  														<label for="checkbox-1-0"></label>
+                  													</th>
+                                            <th title="Name"> Name </th>
+                                            <th title="Contact Name"> Contact Name </th>
+                                            <th title="Industry"> Industry </th>
+                                            <th title="E-mail"> E-mail </th>
+                                            <th title="Phone"> Phone </th>
+                                            <th title="Address"> Address </th>
+                                            <th title="ContractType"> Contract Type </th>
+                                            <th title="Created Date"> Date </th>
+                                            <th title="Action"> Action </th>
+                  												</tr>
+                  											</thead>
+                  											<tbody>
+                  												<tr>
+                  													<td colspan="10" class="text-center">
+                  														<img src="<?php echo config_item('assets_dir');?>images/small-loader.gif">
+                  													</td>
+                  												</tr>
+                  											</tbody>
+                  										</table>
                                     </div>
                                     <div role="tabpanel" class="tab-pane fade" id="auto">
                                         <div class="header" style="padding: 10px 0px;border-bottom:none;text-align:right;">
                                           <a href="javascript:void(0)" onclick="location.reload();" data-toggle="tooltip" class="btn btn-primary btn-background" title="Reload Page"><i class="glyphicon glyphicon-refresh"></i></a>
                                         </div>
-                                        <div class="table-responsive">
-                                          <table id="dataAuto" class="table table-bordered table-striped table-hover dataTable js-exportable" style="width:100%;">
-                      											<thead>
-                      												<tr>
-                      													<th style="width:18px" class="sorting-disabled">
-                      														<input type="checkbox" id="checkbox-1-0" class="regular-checkbox" />
-                      														<label for="checkbox-1-0"></label>
-                      													</th>
-                      													<th title="Name"> Name </th>
-                                                <th title="Contact Name"> Contact Name </th>
-                                                <th title="Industry"> Industry </th>
-                                                <th title="E-mail"> E-mail </th>
-                                                <th title="Phone"> Phone </th>
-                                                <th title="Address"> Address </th>
-                                                <th title="Created Date"> Date </th>
-                                                <th title="Action"> Action </th>
-                      												</tr>
-                      											</thead>
-                      											<tbody>
-                      												<tr>
-                      													<td colspan="10" class="text-center">
-                      														<img src="<?php echo config_item('assets_dir');?>images/small-loader.gif">
-                      													</td>
-                      												</tr>
-                      											</tbody>
-                      										</table>
-                                        </div>
+                                        <table id="dataAuto" class="table table-bordered table-striped" style="width:100%;">
+                    											<thead>
+                    												<tr>
+                    													<th style="width:18px" class="sorting-disabled">
+                    														<input type="checkbox" id="checkbox-1-0" class="regular-checkbox" />
+                    														<label for="checkbox-1-0"></label>
+                    													</th>
+                    													<th title="Name"> Name </th>
+                                              <th title="Contact Name"> Contact Name </th>
+                                              <th title="Industry"> Industry </th>
+                                              <th title="E-mail"> E-mail </th>
+                                              <th title="Phone"> Phone </th>
+                                              <th title="Address"> Address </th>                                              
+                                              <th title="ContractType"> Contract Type </th>
+                                              <th title="Created Date"> Date </th>
+                                              <th title="Action"> Action </th>
+                    												</tr>
+                    											</thead>
+                    											<tbody>
+                    												<tr>
+                    													<td colspan="10" class="text-center">
+                    														<img src="<?php echo config_item('assets_dir');?>images/small-loader.gif">
+                    													</td>
+                    												</tr>
+                    											</tbody>
+                    										</table>
                                     </div>
                                 </div>
                             </div>
@@ -176,6 +174,15 @@
           }
         },
         {
+          "sName": "ContractType",
+          "sClass": "text-center",
+          "bSearchable": false,
+          "bSortable": false,
+          "fnRender": function (oObj) {
+            return oObj;
+          }
+        },
+        {
           "sName": "Action",
           "sClass": "text-center",
           "bSearchable": false,
@@ -185,18 +192,13 @@
           }
         }
       ],
+
       "responsive": true,
-      "dom": 'lfBrtip',
-      "buttons": [
-        { extend: 'copy', className: 'copyButton', titleAttr: 'Export to Copy' },
-        { extend: 'csv', className: 'csvButton', titleAttr: 'Export to CSV' },
-        { extend: 'excel', className: 'excelButton', titleAttr: 'Export to Excel' },
-        { extend: 'pdf', className: 'pdfButton', titleAttr: 'Export to PDF' },
-        { extend: 'print', className: 'printButton', titleAttr: 'Export to Print' }
-      ],
-      "iDisplayLength": 25,
-      "aLengthMenu": [[10,25, 50, 100, 500, -1], [10,25, 50, 100, 500, "All"]],
-       "aaSorting":[[7,'desc']]
+              "dom": 'Bfrtip',
+              "buttons": [
+                'copy', 'csv', 'excel', 'pdf','print'
+       ],
+       "aaSorting":[[8,'desc']]
 
     });
   });
@@ -280,6 +282,15 @@
           }
         },
         {
+          "sName": "State",
+          "sClass": "text-center",
+          "bSearchable": false,
+          "bSortable": true,
+          "fnRender": function (oObj) {
+            return oObj;
+          }
+        },
+        {
           "sName": "Actions",
           "sClass": "text-center",
           "bSearchable": false,
@@ -289,7 +300,7 @@
           }
         }
       ],
-      "aaSorting":[[7,'desc']]
+      "aaSorting":[[8,'desc']]
     });
   });
 </script>

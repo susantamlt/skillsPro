@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <title>Tabs | Bootstrap Based Admin Template - Material Design</title>
+        <title>Recruiter Portal</title>
         <!-- Favicon-->
         <link rel="icon" href="<?php echo config_item('assets_dir');?>favicon.ico" type="image/x-icon" />
         <!-- Google Fonts -->
@@ -19,6 +19,7 @@
         <link href="<?php echo config_item('assets_dir');?>css/style.css" rel="stylesheet">
         <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
         <link href="<?php echo config_item('assets_dir');?>css/themes/all-themes.css" rel="stylesheet" />
+        <link href="<?php echo config_item('assets_dir');?>css/dataTables.bootstrap.css" rel="stylesheet" />
         <!-- Jquery Core Js -->
         <script src="<?php echo config_item('assets_dir');?>plugins/jquery/jquery.min.js"></script>
     </head>
@@ -188,8 +189,8 @@
                         <img src="<?php echo config_item('assets_dir');?>images/user.png" width="48" height="48" alt="User" />
                     </div>
                     <div class="info-container">
-                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->session->userdata('requirter_user_name'); ?></div>
-                        <div class="email"><?php echo $this->session->userdata('requirter_email'); ?></div>
+                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->session->userdata('recruiter_user_name'); ?></div>
+                        <div class="email"><?php echo $this->session->userdata('recruiter_email'); ?></div>
                         <div class="btn-group user-helper-dropdown">
                             <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                             <ul class="dropdown-menu pull-right">
@@ -212,6 +213,7 @@
                         <li id="dashboard" class="ourmenu active"><a href="<?php echo config_item('base_url');?>recruiter/"><i class="material-icons">home</i><span>Dashboard</span></a></li>
                         <li id="requirements" class="ourmenu"><a href="<?php echo config_item('base_url');?>recruiter/requirements/"><i class="material-icons">assignment</i><span>Requirements</span></a></li>
                         <li id="contractors" class="ourmenu"><a href="<?php echo config_item('base_url');?>recruiter/contractors/"><i class="material-icons">assignment</i><span>Contractors</span></a></li>
+                         <li id="interview" class="ourmenu"><a href="<?php echo config_item('base_url');?>recruiter/interview/"><i class="material-icons">assignment</i><span>Interview</span></a></li>
                     </ul>
                 </div>
                 <!-- #Menu -->

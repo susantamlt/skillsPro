@@ -213,7 +213,10 @@
                 <div class="menu">
                     <ul class="list">
                         <li id="contractors" class="ourmenu active"><a href="<?php echo config_item('base_url');?>clients/contractors/" class=""><i class="material-icons">view_list</i><span>Contractors</span></a></li>
-                        <li id="reporting" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/reporting/" class=""><i class="material-icons">view_list</i><span>Reporting</span></a></li>
+                        <li id="topic" class="ourmenu active"><a href="<?php echo config_item('base_url');?>clients/topic/" class=""><i class="material-icons">view_list</i><span>Topic</span></a></li>
+                        <li id="course" class="ourmenu active"><a href="<?php echo config_item('base_url');?>clients/course/" class=""><i class="material-icons">view_list</i><span>Course</span></a></li>
+                        <li id="classes" class="ourmenu active"><a href="<?php echo config_item('base_url');?>clients/classes/" class=""><i class="material-icons">view_list</i><span>Class</span></a></li>
+                        <!-- <li id="reporting" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/reporting/" class=""><i class="material-icons">view_list</i><span>Reporting</span></a></li> -->
                         <li id="settings" class="ourmenu">
                             <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">view_list</i><span>Settings</span></a>
                             <ul class="ml-menu">

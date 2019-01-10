@@ -217,8 +217,11 @@
                         <li id="projects" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/projects/" class=""><i class="material-icons">view_list</i><span>Projects</span></a></li>
                         <li id="jobs" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/jobs/" class=""><i class="material-icons">view_list</i><span>Jobs</span></a></li>
                         <li id="requirements" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/requirements/" class=""><i class="material-icons">view_list</i><span>Requirements</span></a></li>
+                        <li id="requirements" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/emaildetails/statistics" class=""><i class="material-icons">view_list</i><span>Emails</span></a></li>
                         <li id="clients" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/clients/" class=""><i class="material-icons">view_list</i><span>Clients</span></a></li>
                         <li id="contractors" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/contractors/" class=""><i class="material-icons">view_list</i><span>Contractors</span></a></li>
+                        <li id="interview" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/interview/" class=""><i class="material-icons">view_list</i><span>Interview</span></a></li>
+                        <li id="emailmessage" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/emailmessage/" class=""><i class="material-icons">view_list</i><span>Template</span></a></li>
                         <li id="reporting" class="ourmenu"><a href="<?php echo config_item('base_url');?>sales/reporting/" class=""><i class="material-icons">view_list</i><span>Reporting</span></a></li>
                         <li id="settings" class="ourmenu">
                             <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">view_list</i><span>Settings</span></a>

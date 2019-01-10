@@ -13,60 +13,60 @@
 									<fieldset>
 										<legend><?php echo $urlname; ?> Opening Information </legend>
 										<div class="form-group">
-											<label class="col-md-2"> <?php echo $urlname; ?> Title <span class="mandatory">*</span></label>
+								<label class="col-md-2"> <?php echo $urlname; ?> Title <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="prospect_title" id="prospect_title" class="form-control" value="" placeholder="<?php echo $urlname; ?> Title" />
 												<label id="prospect_title-error" class="error" for="prospect_title"></label>
 											</div>
-											<label class="col-md-2"> Client Name <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Client Name <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('client_id',$ljp_clients,'','class="form-control" id="client_id"') ?>
 												<label id="client_id-error" class="error" for="client_id"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2"> Date Opened <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Date Opened <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="date_of_prospect" id="date_of_prospect" class="form-control datepicker" value="" placeholder="dd/mm/yyyy" />
 												<label id="date_of_prospect-error" class="error" for="date_of_prospect"></label>
 											</div>
-											<label class="col-md-2"> Target Date <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Target Date <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="expected_date" id="expected_date" class="form-control datepicker" value="" placeholder="dd/mm/yyyy" />
 												<label id="expected_date-error" class="error" for="expected_date"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2"> <?php echo $urlname; ?> Type <span class="mandatory">*</span></label>
+											<label class="col-md-2"> <?php echo $urlname; ?> Type <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('lead_type',$ljp_leadtype,'','class="form-control" id="lead_type"') ?>
 												<label id="lead_type-error" class="error" for="lead_type"></label>
 											</div>
-											<label class="col-md-2"> <?php echo $urlname; ?> Status <span class="mandatory">*</span></label>
+											<label class="col-md-2"> <?php echo $urlname; ?> Status <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('lead_status',$ljp_status,'','class="form-control" id="lead_status"') ?>
 												<label id="lead_status-error" class="error" for="lead_status"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2"> Country <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Country <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<?php echo form_dropdown('country_code',$ljp_country,'','class="form-control" id="country_code"') ?>
 												<label id="country_code-error" class="error" for="country_code"></label>
 											</div>
-											<label class="col-md-2"> State/Province <span class="mandatory">*</span></label>
+											<label class="col-md-2"> State/Province <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="state_code" id="state_code" class="form-control" value="" placeholder="State/Province" />
 												<label id="state_code-error" class="error" for="state_code"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2"> City <span class="mandatory">*</span></label>
+											<label class="col-md-2"> City <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="city_id" id="city_id" class="form-control" value="" placeholder="City" />
 												<label id="city_id-error" class="error" for="city_id"></label>
 											</div>
-											<label class="col-md-2"> Zip/Postal Code <span class="mandatory">*</span></label>
+											<label class="col-md-2"> Zip/Postal Code <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-4">
 												<input type="text" name="zip_code" id="zip_code" class="form-control" value="" placeholder="Zip/Postal Code" />
 												<label id="zip_code-error" class="error" for="zip_code"></label>
@@ -103,14 +103,14 @@
 									<fieldset>
 										<legend>Description Information </legend>
 										<div class="form-group">
-											<label class="col-md-12"> <?php echo $urlname; ?> Description <span class="mandatory">*</span></label>
+											<label class="col-md-12"> <?php echo $urlname; ?> Description <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-12">
 												<textarea name="prospect_description" id="prospect_description" class="form-control"></textarea>
 												<label id="j_title-error" class="error" for="j_title"></label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-12"> Technical Requirements <span class="mandatory">*</span></label>
+											<label class="col-md-12"> Technical Requirements <span class="mandatory" style="color: red">*</span></label>
 											<div class="col-md-12">
 												<textarea name="requirements_details" id="requirements_details" class="form-control"></textarea>
 												<label id="requirements_details-error" class="error" for="requirements_details"></label>

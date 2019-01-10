@@ -12,7 +12,7 @@
 							<div class="body">
 								<?php echo form_open_multipart('sales/leads/leads_save', array('id' =>'leads_form','name'=>'leads_form','class'=>'form-horizontal','enctype'=>'multipart/form-data','method'=>'POST')); ?>
 									<div class="form-group">
-										<label class="col-md-2"> Client Name </label>
+										<label class="col-md-2"> Client Name<span class="mandatory" style="color:red">*</span> </label>
 										<div class="col-md-4">
 											<input type="text" name="contact_name" id="contact_name" class="form-control" value="" placeholder="Client Name" />
 											<label id="contact_name-error" class="error" for="contact_name"></label>
@@ -24,7 +24,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2"> Industry </label>
+										<label class="col-md-2"> Industry<span class="mandatory" style="color:red">*</span> </label>
 										<div class="col-md-10">
 											<?php $count = 12/count($ljp_leadcat);
 											foreach ($ljp_leadcat as $lk => $lv) { ?>
@@ -34,52 +34,76 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2"> Primary Phone </label>
+										<label class="col-md-2"> Phone<span class="mandatory" style="color:red">*</span> </label>
 										<div class="col-md-4">
 											<input type="text" name="phone_1" id="phone_1" class="form-control" value="" placeholder="Primary Phone No" />
 											<label id="phone_1-error" class="error" for="phone_1"></label>
 										</div>
-										<label class="col-md-2"> Primary E-mail </label>
+										<label class="col-md-2"> Primary E-mail<span class="mandatory" style="color:red">*</span> </label>
 										<div class="col-md-4">
 											<input type="text" name="email_1" id="email_1" class="form-control" value="" placeholder="primary E-mail Id" />
 											<label id="email_1-error" class="error" for="email_1"></label>
 										</div>
 									</div>
 									<div class="form-group">
+										<label class="col-md-2"> Address<span class="mandatory" style="color:red">*</span> </label>
+										<div class="col-md-4">
+											<textarea name="address" id="address" class="form-control" placeholder="street no, city, state, country"></textarea>
+											<label id="address-error" class="error" for="address"></label>
+										</div>
+										<label class="col-md-2"> Zip or Postal Code <span class="mandatory" style="color: red">*</span></label>
+										<div class="col-md-4">
+											<input type="text" name="zip_code" id="zip_code" class="form-control" value="" placeholder="Zip or Postal Code" />
+											<label id="zip_code-error" class="error" for="zip_code"></label>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2">Mobile</label>
+									    <div class="col-md-4">
+										     <input type="text" name="phone_3" id="phone_3" class="form-control" value="" placeholder="Mobile No" />
+										<label id="phone_3-error" class="error" for="phone_3"></label>
+									    </div>
+									    <label class="col-md-2"> Secondary E-mail </label>
+										<div class="col-md-4">
+											<input type="text" name="email_2" id="email_2" class="form-control" value="" placeholder="Secondary E-mail(optional) " />
+											<label id="email_2-error" class="error" for="email_2"></label>
+										</div>
+									</div>
+									<div class="form-group">
 										<label class="col-md-2"> Secondary Phone </label>
 										<div class="col-md-4">
-											<input type="text" name="phone_2" id="phone_2" class="form-control" value="" placeholder="Secondary Phone No" />
+											<input type="text" name="phone_2" id="phone_2" class="form-control" value="" placeholder="Secondary Phone(optional)" />
 											<label id="phone_2-error" class="error" for="phone_2"></label>
 										</div>
-										<label class="col-md-2"> Secondary E-mail </label>
-										<div class="col-md-4">
-											<input type="text" name="email_2" id="email_2" class="form-control" value="" placeholder="Secondary E-mail Id " />
-											<label id="email_2-error" class="error" for="email_2"></label>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2"> Department </label>
-										<div class="col-md-4">
-											<input type="text" name="department" id="department" class="form-control" value="" placeholder="Department" />
-											<label id="department-error" class="error" for="department"></label>
-										</div>
-										<label class="col-md-2"> Fax </label>
-										<div class="col-md-4">
-											<input type="text" name="fax" id="fax" class="form-control" value="" placeholder="Fax" />
-											<label id="email_2-error" class="error" for="email_2"></label>
-										</div>
-									</div>
-									<div class="form-group">
 										<label class="col-md-2"> Job Title </label>
 										<div class="col-md-4">
 											<input type="text" name="job_title" id="job_title" class="form-control" value="" placeholder="Job Title" />
 											<label id="job_title-error" class="error" for="job_title"></label>
 										</div>
-										<label class="col-md-2"> Address </label>
+									</div>	
+									<div class="form-group">
+										<label class="col-md-2">Lead Source</label>
 										<div class="col-md-4">
-											<textarea name="address" id="address" class="form-control" placeholder="street no, city, state, country, zip/postcode"></textarea>
-											<label id="address-error" class="error" for="address"></label>
+											<?php echo form_dropdown('lead_source',$ljp_leadsource,'','class="form-control" id="lead_source"') ?>
+											<label id="lead_source-error" class="error" for="lead_source"></label>
 										</div>
+										<label class="col-md-2">Lead Status</label>
+										<div class="col-md-4">
+											<?php echo form_dropdown('lead_status',$ljp_leadstatus,'','class="form-control" id="lead_status"') ?>
+											<label id="lead_status-error" class="error" for="lead_status"></label>
+										</div>	
+									</div>					
+									<div class="form-group">
+										<label class="col-md-2"> Fax No</label>
+										<div class="col-md-4">
+											<input type="text" name="fax" id="fax" class="form-control" value="" placeholder="Fax" />
+											<label id="email_2-error" class="error" for="email_2"></label>
+										</div>
+										<label class="col-md-2"> Department </label>
+										<div class="col-md-4">
+											<input type="text" name="department" id="department" class="form-control" value="" placeholder="Department" />
+											<label id="department-error" class="error" for="department"></label>
+										</div>										
 									</div>
 									<div class="form-group">
 										<label class="col-md-2"> Skype Id </label>
@@ -99,10 +123,17 @@
 											<input type="text" name="linkedin" id="linkedin" class="form-control" value="" placeholder="Linkedin" />
 											<label id="linkedin-error" class="error" for="linkedin"></label>
 										</div>
-										<label class="col-md-2"> Website </label>
+										<label class="col-md-2"> Website Address </label>
 										<div class="col-md-4">
 											<input type="text" name="website" id="website" class="form-control" value="" placeholder="Website Url" />
 											<label id="website-error" class="error" for="website"></label>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2"> <?php echo $urlname; ?> <span class="mandatory" style="color: red">*</span></label>
+										<div class="col-md-4">
+											<?php echo form_dropdown('contract_type',$ljp_contractType,'','class="form-control" id="contract_type"') ?>
+											<label id="contract_type-error" class="error" for="contract_type"></label>
 										</div>
 									</div>
 									<div class="form-group">
@@ -152,6 +183,11 @@
 							minlength: 7,
 							maxlength: 10,
 						},
+						phone_3: {
+							number: true,
+							minlength: 7,
+							maxlength: 10,
+						},
 						email_1: {
 							required: true,
 							email: true,
@@ -165,6 +201,14 @@
 							required:false,
                              regex:/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
 						}, 
+						contract_type:{
+							required:true,
+						},
+						zip_code:{
+							required:true,
+							minlength:4,
+							maxlength:10,
+						},
 						address : {
 							required:true,
 						},  
@@ -172,10 +216,10 @@
 					messages: {
 						contact_name: {
 							required: "Please enter name",
-							regex: "Special character and Number not allowed"
+							regex: "Special characters and Number not allowed"
 						},
 						decision_maker_name: {
-							regex: "Special character and Number not allowed"
+							regex: "Special characters and Number not allowed"
 						},
 						phone_1: {
 							required: "Please enter a phone number.",
@@ -184,6 +228,11 @@
 							maxlength: "Your phone must be at max 10 digits"
 						},
 						phone_2: {
+							number: "Please enter a valid phone number.",
+							minlength: "Your phone must be at min 7 digits",
+							maxlength: "Your phone must be at max 10 digits"
+						},
+						phone_3: {
 							number: "Please enter a valid phone number.",
 							minlength: "Your phone must be at min 7 digits",
 							maxlength: "Your phone must be at max 10 digits"
@@ -200,9 +249,15 @@
 						website: {
 							regex:"Please enter valid Url"
 						},
+						contract_type:{
+	                        required: "Please select contract type",
+						},
 						address: {
-							required:"Please Enter your address with Post Code"
-
+							required:"Please enter your address",
+						},
+						zip_code:{
+							required:"Please enter zip_code",
+							minlength:"Enter atleast 4 digits"
 						},
 					},
 					onfocusout: function(element) {
@@ -225,6 +280,7 @@
 						formData.append('phone_2', $('#phone_2').val());
 						formData.append('email_1', $('#email_1').val());
 						formData.append('email_2', $('#email_2').val());
+						formData.append('phone_3', $('#phone_3').val());
 						formData.append('department', $('#department').val());
 						formData.append('fax', $('#fax').val());
 						formData.append('job_title', $('#job_title').val());
@@ -234,6 +290,8 @@
 						formData.append('linkedin', $('#linkedin').val());
 						formData.append('website', $('#website').val());
 						formData.append('cat_id', catIdNew);
+						formData.append('contract_type', $('#contract_type').val());
+						formData.append('zip_code', $('zip_code').val());
 						formData.append('user_id', $('#user_id').val());
 						formData.append('org_id', $('#org_id').val());
 						$.ajax({
@@ -249,15 +307,13 @@
 								var resD = $.parseJSON(res);
 								if(resD.status=='1'){
 									var html = '<div class="alert alert-success fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Success!</strong> The value successfully insert.</div>';
-									$('#massage').html(html);
+									$('#message').html(html);
 									window.setTimeout(function () {
 										location.href = "<?php echo site_url('sales/leads') ?>";
 									}, 5000);
 								} else { 
 									var html = '<div class="alert alert-warning fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Warning!</strong> This value already exists in the list.</div>';
-									$('#massage').html(html);
-									$('.error_msg').show();
-									$('.error_msg').html(res.message);
+									$('#message').html(html);
 								}
 							}
 						});

@@ -6,18 +6,18 @@
 						<div class="card">
 							<div class="header">
 								<h2>Edit Requirments</h2>
+								<div id="massage"></div>
 							</div>
-							<div id="massage"></div>
 							<div class="body">
 								<?php echo form_open_multipart('sales/requirements/requirements_save', array('id'=>'requirments_form','name'=>'requirments_form','class'=>'form-horizontal','enctype'=>'multipart/form-data','method'=>'POST')); ?>
 									<div class="form-group">
-										<label class="col-md-2"> Prospect Title </label>
-										<div class="col-md-4"><?php echo $ljp_data[0]['prospect_title']; ?></div>
-										<label class="col-md-2"> No of Requirement </label>
+										<label class="col-md-2"> No of Requirement<span class="mandatory" style="color: red">*</span></label>
 										<div class="col-md-4">
 											<input type="text" name="no_of_requirement" id="no_of_requirement" class="form-control" value="<?php echo $ljp_data[0]['no_of_requirement']; ?>" placeholder="No of Requirement" />
 											<label id="no_of_requirement-error" class="error" for="no_of_requirement"></label>
 										</div>
+										<label class="col-md-2"> Prospect Title </label>
+										<div class="col-md-4"><?php echo $ljp_data[0]['prospect_title']; ?></div>
 									</div>	
 									<div class="form-group">
 										<label class="col-md-2"> No of Requirement Fullfilled</label>
@@ -43,22 +43,16 @@
 											<label id="final_comments_on_requirement-error" class="error" for="final_comments_on_requirement"></label>
 										</div>
 									</div>	
-									<div class="form-group">
+									<div class="form-group demo-masked-input">
 										<label class="col-md-2">Requirement Status </label>
 										<div class="col-md-4">
-											<select class="form-control" id="requirement_status">
-												<option value=" ">--Select One--</option>
-												<option value="FU">Full Filled</option>
-												<option value="PF">Partially Filled </option>
-												<option value="VA">Vacant</option>
-
-											</select>
-											<!-- <input type="text" name="requirement_status" id="requirement_status" class="form-control" value="<?php echo $ljp_data[0]['requirement_status']; ?>" placeholder="Requirement Status" />
-											<label id="requirement_status-error" class="error" for="requirement_status"></label> -->
+											<?php $array= array(''=>'--Select One--','FU'=>'Full Filled','PF'=>'Partially Filled','VA'=>'Vacant'); ?>
+											<?php echo form_dropdown('requirement_status',$array,$ljp_data[0]['requirement_status'],'class="form-control" id="requirement_status"') ?>
+											<label id="requirement_status_error" class="error" for="requirement_status"></label>
 										</div>
 										<label class="col-md-2"> Expected Date of Closure </label>
 										<div class="col-md-4">
-											<input type="Date" name="expected_date_of_closure" id="expected_date_of_closure" class="form-control" value="<?php echo $ljp_data[0]['expected_date_of_closure']; ?>" placeholder="Expected Date of Closure"/>
+											<input type="text" name="expected_date_of_closure" id="expected_date_of_closure" class="form-control date" value="<?php echo date('m/d/Y',strtotime($ljp_data[0]['expected_date_of_closure'])); ?>" placeholder="Expected Date of Closure"/>
 											<label id="expected_date_of_closure-error" class="error" for="expected_date_of_closure"></label>
 										</div>
 									</div>	
@@ -107,13 +101,13 @@
 						no_of_requirement: {
 							required: true,
 							number: true,
-							maxlength: 10,
+							maxlength:5,
 							regex: /^[0-9]*$/,
 						},
 						no_requirement_fullfilled: {
-							required: true,
+							required: false,
 							number: true,
-							maxlength: 10,
+							maxlength: 5,
 							regex: /^[0-9]*$/,
              			},
              			proposed_hourly_rate: {
@@ -134,13 +128,13 @@
 							required: "Please enter No of requirements",
 							number:"Please Enter number",
 							regex: "Special character and alphabets notallowed",
-							maxlength: "Your phone must be at max 10 digits"
+							maxlength: "Number maximum 5 digits allowed"
 						},
 						no_requirement_fullfilled: {
-							required: "Please enter a phone number.",
+							required: "Please enter no of requirements fullfilled.",
 							number: "Please enter number.",
 							regex: "Special character and alphabets notallowed",
-							maxlength: "Your phone must be at max 10 digits"
+							maxlength: "Number maximum 5 digits allowed"
 						},
 						proposed_hourly_rate: {
 							regex: "Please enter valid ammount.",
@@ -177,6 +171,14 @@
 						event.preventDefault();// using this page stop being refreshing
 						var requirement = CKEDITOR.instances.requirement.getData();
 						var formData = new FormData();
+						var noofreq=$('#no_of_requirement').val();
+						var noofreqfulfld=$('#no_requirement_fullfilled').val();
+						 if(noofreqfulfld!='' && noofreq!='' && noofreqfulfld>noofreq)
+					      {
+					       $("#no_requirement_fullfilled-error").show().html('Requirment fullfilled should not be greater than Requirement').delay(10000).fadeOut();
+					       $('#no_requirement_fullfilled').val(noofreq);
+					       return false;
+					      }
 						formData.append('requirement_id', $('#requirement_id').val());
 						formData.append('org_id', $('#org_id').val());
 						formData.append('user_id', $('#user_id').val());
@@ -200,7 +202,7 @@
 							success: function(res) {
 								var resD = $.parseJSON(res);
 								if(resD.status=='1'){
-									var html = '<div class="alert alert-success fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Success!</strong> The value successfully insert.</div>';
+									var html = '<div class="alert alert-success fade in alert-dismissible" style="margin-top:18px;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Success!</strong> The value update successfully .</div>';
 									$('#massage').html(html);
 									window.setTimeout(function () {
 										location.href = "<?php echo site_url('sales/requirements') ?>";
@@ -217,3 +219,12 @@
 				});
 			});
 		</script>
+		<!-- Input Mask Plugin Js -->
+        <script src="<?php echo config_item('assets_dir');?>plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+        <script type="text/javascript">
+          var $demoMaskedInput = $('.demo-masked-input');
+          //Date
+          $demoMaskedInput.find('.date').inputmask('mm/dd/yyyy', { placeholder: '__/__/____' });
+          //Time
+          $demoMaskedInput.find('.time12').inputmask('hh:mm t', { placeholder: '__:__ _m', alias: 'time12', hourFormat: '12' });
+        </script>

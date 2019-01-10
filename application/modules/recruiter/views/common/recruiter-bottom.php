@@ -10,6 +10,8 @@
         <script src="<?php echo config_item('assets_dir');?>js/admin.js"></script>
         <!-- Demo Js -->
         <script src="<?php echo config_item('assets_dir');?>js/demo.js"></script>
+        <script src="<?php echo config_item('assets_dir');?>plugins/jquery-validation/jquery.validate.js"></script>
+        <script src="<?php echo config_item('assets_dir');?>plugins/jquery-validation/additional-methods.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
                 var pageId = $('#page').val();

@@ -9,9 +9,14 @@ class Jobs extends MX_Controller
 		modules::run('login/login/is_sales_logged_in');
 	}
 
-	public function index() {		
+	public function index() {
+		$this->load->model('jobs_model');
+		$data['ljp_country'] = $this->jobs_model->get_ljp_country();
+		$data['ljp_state'] = $this->jobs_model->get_ljp_state();
+		$data['ljp_citys'] = $this->jobs_model->get_ljp_citys();
+		$data['ljp_industry'] = $this->jobs_model->get_ljp_industry();
 		$this->load->view('common/sales-top');
-		$this->load->view('jobs/list');
+		$this->load->view('jobs/list',$data);
 		$this->load->view('common/sales-bottom');
 	}
 
@@ -30,7 +35,7 @@ class Jobs extends MX_Controller
 				$row[3]= ucwords($row[3]);
 			}
 			if($row[4]!=''){
-				$row[4]= ucwords($row[4]);
+				$row[4]= strtolower($row[4]);
 			}
 			if($row[5]!=''){
 				$row[5]= ucwords($row[5]);
@@ -44,7 +49,15 @@ class Jobs extends MX_Controller
 			if($row[8]!=''){
 				$row[8]= date('jS M Y', strtotime($row[8]));
 			}
-			$row[9] = '<a href="'.base_url('sales/jobs/jobs_view/').$row[0].'" title="View Record" data-toggle="tooltip"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/jobs/jobs_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip"><i class="glyphicon glyphicon-edit" ></i></a>';
+			$isVerified = $row[9];
+			if($isVerified=='Y'){
+				$confirmClass = 'v_confirm';
+				$confirmClassI = 'glyphicon-ok';
+			} else {
+				$confirmClass = 'a_confirm';
+				$confirmClassI = 'glyphicon-ban-circle';
+			}
+			$row[9] = '<a href="'.base_url('sales/jobs/jobs_view/').$row[0].'" title="View Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/jobs/jobs_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-edit" ></i></a>&nbsp;&nbsp;<a href="javascript:void(0)" id="confirm-'.$row[0].'" class="'.$confirmClass.'" title="Verified Checking" data-id="'.$row[0].'" data-toggle="tooltip"><i id="confirm-i-'.$row[0].'" class="glyphicon '.$confirmClassI.'" ></i></a>';
 			$row[0] = '<input type="checkbox" id="checkbox-1-' . intval($row[0]) . '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $row[0] . '"/><label for="checkbox-1-' . intval($row[0]) . '"></label>';
 			$aaData[] = $row;
 		}
@@ -53,8 +66,9 @@ class Jobs extends MX_Controller
 	}
 
 	public function jobs_list_a() {
+		$data = $this->input->post();
 		$this->load->model('jobs_model');
-		$result = $this->jobs_model->get_Jobs_lista();
+		$result = $this->jobs_model->get_Jobs_lista($data);
 		$aaData = array();
 		foreach($result['aaData'] as $row){
 			if($row[1]!=''){
@@ -67,7 +81,7 @@ class Jobs extends MX_Controller
 				$row[3]= ucwords($row[3]);
 			}
 			if($row[4]!=''){
-				$row[4]= ucwords($row[4]);
+				$row[4]= strtolower($row[4]);
 			}
 			if($row[5]!=''){
 				$row[5]= ucwords($row[5]);
@@ -81,7 +95,15 @@ class Jobs extends MX_Controller
 			if($row[8]!=''){
 				$row[8]= date('jS M Y', strtotime($row[8]));
 			}
-			$row[9] = '<a href="'.base_url('sales/jobs/jobs_view/').$row[0].'" title="View Record" data-toggle="tooltip"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/jobs/jobs_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip"><i class="glyphicon glyphicon-edit" ></i></a>';
+			$isVerified = $row[9];
+			if($isVerified=='Y'){
+				$confirmClass = 'v_confirm';
+				$confirmClassI = 'glyphicon-ok';
+			} else {
+				$confirmClass = 'a_confirm';
+				$confirmClassI = 'glyphicon-ban-circle';
+			}
+			$row[9] = '<a href="'.base_url('sales/jobs/jobs_view/').$row[0].'" title="View Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/jobs/jobs_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-edit" ></i></a>&nbsp;&nbsp;<a href="javascript:void(0)" id="confirm-'.$row[0].'" class="'.$confirmClass.'" title="Verified Checking" data-id="'.$row[0].'" data-toggle="tooltip"><i id="confirm-i-'.$row[0].'" class="glyphicon '.$confirmClassI.'" ></i></a>';
 			$row[0] = '<input type="checkbox" id="checkbox-1-' . intval($row[0]) . '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $row[0] . '"/><label for="checkbox-1-' . intval($row[0]) . '"></label>';
 			$aaData[] = $row;
 		}
@@ -89,6 +111,194 @@ class Jobs extends MX_Controller
 		print_r(json_encode($result));
 	}
 
+	public function jobs_list_ns() {
+		$data = $this->input->post();
+		$this->load->model('jobs_model');
+		$result = $this->jobs_model->get_Jobs_listns($data);
+		$aaData = array();
+		foreach($result['aaData'] as $row){
+			if($row[1]!=''){
+				$row[1]= ucwords($row[1]);
+			}
+			if($row[2]!=''){
+				$row[2]= ucwords($row[2]);
+			}
+			if($row[3]!=''){
+				$row[3]= ucwords($row[3]);
+			}
+			if($row[4]!=''){
+				$row[4]= strtolower($row[4]);
+			}
+			if($row[5]!=''){
+				$row[5]= ucwords($row[5]);
+			}
+			if($row[6]!=''){
+				$row[6]= ucwords($row[6]);
+			}
+			if($row[7]!=''){
+				$row[7]= ucwords($row[7]);
+			}
+			if($row[8]!=''){
+				$row[8]= date('jS M Y', strtotime($row[8]));
+			}
+			$isVerified = $row[9];
+			if($isVerified=='Y'){
+				$confirmClass = 'v_confirm';
+				$confirmClassI = 'glyphicon-ok';
+			} else {
+				$confirmClass = 'a_confirm';
+				$confirmClassI = 'glyphicon-ban-circle';
+			}
+			$row[9] = '<a href="'.base_url('sales/jobs/jobs_view/').$row[0].'" title="View Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/jobs/jobs_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-edit" ></i></a>&nbsp;&nbsp;<a href="javascript:void(0)" id="confirm-'.$row[0].'" class="'.$confirmClass.'" title="Verified Checking" data-id="'.$row[0].'" data-toggle="tooltip"><i id="confirm-i-'.$row[0].'" class="glyphicon '.$confirmClassI.'" ></i></a>';
+			$row[0] = '<input type="checkbox" id="checkbox-1-' . intval($row[0]) . '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $row[0] . '"/><label for="checkbox-1-' . intval($row[0]) . '"></label>';
+			$aaData[] = $row;
+		}
+		$result['aaData'] = $aaData;
+		print_r(json_encode($result));
+	}
+
+	public function jobs_list_s() {
+		$data = $this->input->post();
+		$this->load->model('jobs_model');
+		$result = $this->jobs_model->get_Jobs_lists($data);
+		$aaData = array();
+		foreach($result['aaData'] as $row){
+			if($row[1]!=''){
+				$row[1]= ucwords($row[1]);
+			}
+			if($row[2]!=''){
+				$row[2]= ucwords($row[2]);
+			}
+			if($row[3]!=''){
+				$row[3]= ucwords($row[3]);
+			}
+			if($row[4]!=''){
+				$row[4]= strtolower($row[4]);
+			}
+			if($row[5]!=''){
+				$row[5]= ucwords($row[5]);
+			}
+			if($row[6]!=''){
+				$row[6]= ucwords($row[6]);
+			}
+			if($row[7]!=''){
+				$row[7]= ucwords($row[7]);
+			}
+			if($row[8]!=''){
+				$row[8]= date('jS M Y', strtotime($row[8]));
+			}
+			$isVerified = $row[9];
+			if($isVerified=='Y'){
+				$confirmClass = 'v_confirm';
+				$confirmClassI = 'glyphicon-ok';
+			} else {
+				$confirmClass = 'a_confirm';
+				$confirmClassI = 'glyphicon-ban-circle';
+			}
+			$row[9] = '<a href="'.base_url('sales/jobs/jobs_view/').$row[0].'" title="View Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/jobs/jobs_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-edit" ></i></a>&nbsp;&nbsp;<a href="javascript:void(0)" id="confirm-'.$row[0].'" class="'.$confirmClass.'" title="Verified Checking" data-id="'.$row[0].'" data-toggle="tooltip"><i id="confirm-i-'.$row[0].'" class="glyphicon '.$confirmClassI.'" ></i></a>';
+			$row[0] = '<input type="checkbox" id="checkbox-1-' . intval($row[0]) . '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $row[0] . '"/><label for="checkbox-1-' . intval($row[0]) . '"></label>';
+			$aaData[] = $row;
+		}
+		$result['aaData'] = $aaData;
+		print_r(json_encode($result));
+	}
+
+	public function jobs_list_CL() {
+		$data = $this->input->post();
+		$this->load->model('jobs_model');
+		$result = $this->jobs_model->get_Jobs_listnCL($data);
+		$aaData = array();
+		foreach($result['aaData'] as $row){
+			if($row[1]!=''){
+				$row[1]= ucwords($row[1]);
+			}
+			if($row[2]!=''){
+				$row[2]= ucwords($row[2]);
+			}
+			if($row[3]!=''){
+				$row[3]= ucwords($row[3]);
+			}
+			if($row[4]!=''){
+				$row[4]= strtolower($row[4]);
+			}
+			if($row[5]!=''){
+				$row[5]= ucwords($row[5]);
+			}
+			if($row[6]!=''){
+				$row[6]= ucwords($row[6]);
+			}
+			if($row[7]!=''){
+				$row[7]= ucwords($row[7]);
+			}
+			if($row[8]!=''){
+				$row[8]= date('jS M Y', strtotime($row[8]));
+			}
+			$isVerified = $row[9];
+			if($isVerified=='Y'){
+				$confirmClass = 'v_confirm';
+				$confirmClassI = 'glyphicon-ok';
+			} else {
+				$confirmClass = 'a_confirm';
+				$confirmClassI = 'glyphicon-ban-circle';
+			}
+			$row[9] = '<a href="'.base_url('sales/jobs/jobs_view/').$row[0].'" title="View Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/jobs/jobs_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-edit" ></i></a>&nbsp;&nbsp;<a href="javascript:void(0)" id="confirm-'.$row[0].'" class="'.$confirmClass.'" title="Verified Checking" data-id="'.$row[0].'" data-toggle="tooltip"><i id="confirm-i-'.$row[0].'" class="glyphicon '.$confirmClassI.'" ></i></a>';
+			$row[0] = '<input type="checkbox" id="checkbox-1-' . intval($row[0]) . '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $row[0] . '"/><label for="checkbox-1-' . intval($row[0]) . '"></label>';
+			$aaData[] = $row;
+		}
+		$result['aaData'] = $aaData;
+		print_r(json_encode($result));
+	}
+
+	public function jobs_list_indeed() {
+		$data = $this->input->post();
+		$this->load->model('jobs_model');
+		$result = $this->jobs_model->get_Jobs_listnIndeed($data);
+		$aaData = array();
+		foreach($result['aaData'] as $row){
+			if($row[1]!=''){
+				$row[1]= ucwords($row[1]);
+			}
+			if($row[2]!=''){
+				$row[2]= ucwords($row[2]);
+			}
+			if($row[3]!=''){
+				$row[3]= ucwords($row[3]);
+			}
+			if($row[4]!=''){
+				$row[4]= strtolower($row[4]);
+			}
+			if($row[5]!=''){
+				$row[5]= ucwords($row[5]);
+			}
+			if($row[6]!=''){
+				$row[6]= ucwords($row[6]);
+			}
+			if($row[7]!=''){
+				$row[7]= ucwords($row[7]);
+			}
+			if($row[8]!=''){
+				$row[8]= date('jS M Y', strtotime($row[8]));
+			}
+			$isVerified = $row[9];
+			if($isVerified=='Y'){
+				$confirmClass = 'v_confirm';
+				$confirmClassI = 'glyphicon-ok';
+			} else {
+				$confirmClass = 'a_confirm';
+				$confirmClassI = 'glyphicon-ban-circle';
+			}
+			$row[9] = '<a href="'.base_url('sales/jobs/jobs_view/').$row[0].'" title="View Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-eye-open" ></i></a>&nbsp;&nbsp;<a href="'.base_url('sales/jobs/jobs_edit/').$row[0].'" title="Edit Record" data-toggle="tooltip" onclick="return !window.open(this.href)"><i class="glyphicon glyphicon-edit" ></i></a>&nbsp;&nbsp;<a href="javascript:void(0)" id="confirm-'.$row[0].'" class="'.$confirmClass.'" title="Verified Checking" data-id="'.$row[0].'" data-toggle="tooltip"><i id="confirm-i-'.$row[0].'" class="glyphicon '.$confirmClassI.'" ></i></a>';
+			$row[0] = '<input type="checkbox" id="checkbox-1-' . intval($row[0]) . '" class="checkbox1 regular-checkbox" name="regular-checkbox" value="' . $row[0] . '"/><label for="checkbox-1-' . intval($row[0]) . '"></label>';
+			$aaData[] = $row;
+		}
+		$result['aaData'] = $aaData;
+		print_r(json_encode($result));
+	}
+
+	public function jobs_list_filter($value='') {
+		$data = $this->input->post();
+		print_r(json_encode($data));
+	}
 	public function jobs_add() {
 		$this->load->model('jobs_model');
 		$data['urlname'] = 'Job';
@@ -131,17 +341,37 @@ class Jobs extends MX_Controller
 		$this->load->model('jobs_model');
 		$data['urlname'] = 'Job';
 		$jobs = $this->jobs_model->get_ljp_jobsView($id);
+		if(isset($jobs[0]['is_sms_sent']) && $jobs[0]['is_sms_sent']=='Y'){
+			$data['is_sent']='Y';
+			
+		}else{
+			$data['is_sent']='N';
+		}
+
+		$data['email_verified']=$this->jobs_model->email_verified($id);
+		$template=$this->jobs_model->get_template_sms();
+		$template_email=$this->jobs_model->get_template_email();
 		
 		$ljp_status = $this->config->item('ljp_status');
 		$ljp_leadtype = $this->config->item('ljp_leadtype');
 		$ljp_typeSalary = $this->config->item('ljp_typeSalary');
-		
-		$ljp_catid = $this->jobs_model->contactdetails($jobs[0]);
+		if($jobs[0]['client_id'] > 0){
+			$ljp_catid = $this->jobs_model->contactdetails($jobs[0]);
+		} else {
+			$ljp_catid = $this->config->item('ljp_leadcat');
+		}		
 		$jobs[0]['lead_type']=$ljp_leadtype[$jobs[0]['lead_type']];
 		$jobs[0]['lead_status']=$ljp_status[$jobs[0]['lead_status']];
-		$jobs[0]['cat_id']=$ljp_catid[$jobs[0]['cat_id']];
+		unset($ljp_catid['']);
+		if($jobs[0]['cat_id']!='' && !empty($ljp_catid)){
+			$jobs[0]['cat_id']=$ljp_catid[$jobs[0]['cat_id']];
+		} else {
+			$jobs[0]['cat_id']='';
+		}
 
 		$data['jobs'] = $jobs;
+		$data['template']=$template;
+		$data['get_template_email']=$template;
 		$data['ljp_projectStage'] = $this->config->item('ljp_projectStage');
 		$this->load->view('common/sales-top');
 		$this->load->view('jobs/jobsview',$data);
@@ -375,7 +605,28 @@ class Jobs extends MX_Controller
 		if(!empty($data)){
 			$this->load->model('jobs_model');
 			$_data['status'] = 1;
-			$_data['sendid'] = $this->jobs_model->sendcontract($data);
+			$send = $this->jobs_model->sendcontract($data);
+			$config = array('protocol'=>'sendmail','mailpath'=>'/usr/sbin/sendmail','charset'=>'iso-8859-1','wordwrap'=>TRUE);
+			if(!empty($send)){
+				if($send['email_1']!=''){
+					$send['contact_email_id'] = $data['id'];
+					$message = $this->load->view('jobs/emailTemplate',$send, TRUE);
+					$this->load->library('email');
+					$this->email->initialize($config);
+					$this->email->set_mailtype("html");
+					$this->email->from('danny.peters@newtonmast.com', 'Danny Peters');
+					$this->email->cc('aaron.myers@newtonmast.com', 'Aaron Myers'); 
+					$this->email->to("'".$send['email_1']."'");
+					/*$this->email->to('avik.mitra@mindtechlabs.com');*/
+					$this->email->subject('Re: Craigslist: Job Post');
+					$this->email->message($message);
+					$this->email->send();
+				}
+				if($send['phone_1']!='' && $send['phone_type']=='M'){
+					
+				}
+			}
+			$_data['sendid'] = $send;
 			$_data['message'] = 'Successful';
 		} else {
 			$_data['status'] = 0;
@@ -400,6 +651,108 @@ class Jobs extends MX_Controller
 		} else {
 			$_data['status'] = 0;
 			$_data['message'] = 'Failure';
+		}
+		echo json_encode($_data);
+	}
+
+    public function get_template_content(){
+    	$this->load->model('jobs_model');
+    	$template_id=$this->input->post('message_temaplte_id');
+    	$result=$this->jobs_model->get_content($template_id);
+    	$ret_arr=array('result'=>1,'content'=>$result);
+    	echo  json_encode($ret_arr);
+    }
+
+    public function call_status(){
+    	$data['call_status']=$this->input->post('call_status');
+    	$data['call_comment']=$this->input->post('call_status');
+    	//$data['called']
+    	$data['job_id']=$this->input->post('job_id');
+
+    	$data['called_by']=$this->session->userdata('');
+    }
+
+    public function email_list_create(){
+    	$this->load->model('jobs_model');
+    	$data['email']=$this->input->post('email');
+    	$data['job_id']=$this->input->post('job_id');
+
+    	$result=$this->jobs_model->email_save($data);
+    	
+    	$ret_arr=array('result'=>$result);
+    	echo json_encode($ret_arr);
+    }
+
+    public function verifiedChecking() {
+    	$this->load->model('jobs_model');
+    	$data = $this->input->post();
+    	if(!empty($data)){
+    		$resultEmail = $this->jobs_model->get_ljp_jobsView($data['job_id']);
+    		if($resultEmail[0]['prospect_email_1']!='' && preg_match("/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/",$resultEmail[0]['prospect_email_1']) !== 0){
+    			$data['email']=$resultEmail[0]['prospect_email_1'];
+    			$result = $this->jobs_model->verifiedChecking($data);
+    			if($result > 0){
+    				$_data = array('status'=>1,'msg'=>'Verified');
+    			} else {
+    				$_data = array('status'=>0,'msg'=>'Sorry not available');
+    			}
+    		}
+    	} else {
+    		$_data = array('status'=>0,'msg'=>'Sorry not available');
+    	}
+    	echo json_encode($_data);
+    }
+
+	public function jobgoogleurl() {
+		$data = $this->input->post();
+		if(isset($data['user_id']) && $data['user_id'] > 0){
+			$this->load->model('jobs_model');
+			$data['ip_address'] = $_SERVER['REMOTE_ADDR'];
+			$data['click_time'] = date('Y-m-d H:i:s');
+			$data['is_url'] = 'G';
+			$this->jobs_model->jobgoogleurl_save($data);
+			echo json_encode(array('status' =>'1','msg'=>'Thank You'));
+		} else {
+			echo json_encode(array('status' =>'0','msg'=>'No data found'));
+		}
+	}
+
+	public function joburl() {
+		$data = $this->input->post();
+		if(isset($data['user_id']) && $data['user_id'] > 0){
+			$this->load->model('jobs_model');
+			$data['ip_address'] = $_SERVER['REMOTE_ADDR'];
+			$data['click_time'] = date('Y-m-d H:i:s');
+			$data['is_url'] = 'U';
+			$this->jobs_model->jobgoogleurl_save($data);
+			echo json_encode(array('status' =>'1','msg'=>'Thank You'));
+		} else {
+			echo json_encode(array('status' =>'0','msg'=>'No data found'));
+		}
+	}
+
+	public function jobs_client_save_data($value='') {
+		$data = $this->input->post();
+		if(!empty($data)){
+			$this->load->model('jobs_model');
+			$Result = $this->jobs_model->jobs_client_save_data($data);
+			if($Result > 0){
+				$data['prospect_phone_1']=$Result['phone_1'];
+				$data['prospect_email_1']=$Result['email_1'];
+				$data['client_id']=$Result['contact_id'];
+				unset($data['phonenumber']);
+				unset($data['emailid']);
+				unset($data['contact_name']);
+				$update=$this->jobs_model->jobs_save($data);
+				$_data['status'] = 1;
+				$_data['msg'] = 'Successful';
+			} else {
+				$_data['status'] = 0;
+				$_data['msg'] = 'Failure';				
+			}
+		} else {
+			$_data['status'] = 0;
+			$_data['msg'] = 'Failure';
 		}
 		echo json_encode($_data);
 	}

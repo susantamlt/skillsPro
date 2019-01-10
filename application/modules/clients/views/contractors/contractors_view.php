@@ -56,12 +56,39 @@
 										<div class="col-md-4"><?php echo $contractors[0]['interview_time']; ?></div>
 									</div>
 								</fieldset>
+								<fieldset>
+									<legend> Contractor Timesheet </legend>
+									<div class="">
+										<table id="dataManual" class="table table-bordered table-striped" style="width:100%;">
+		                                  <thead>
+		                                    <tr>
+		                                      <th style="width:18px" class="sorting-disabled">
+		                                        <input type="checkbox" id="checkbox-1-0" class="regular-checkbox" />
+		                                        <label for="checkbox-1-0"></label>
+		                                      </th>
+		                                      <th title="Name"> Day </th>
+		                                      <th title="Name"> Date </th>
+		                                      <th title="Date"> Working Hours </th>
+		                                      <th title="Action"> <a href="<?php echo base_url('clients/contractors/contractors_timesheet_add'); ?>" title="Add Record" data-toggle="tooltip"><i class="glyphicon glyphicon-plus"></i></a> </th>
+		                                    </tr>
+		                                  </thead>
+		                                  <tbody>
+		                                    <tr>
+		                                      <td colspan="5" class="text-center">
+		                                        <img src="<?php echo config_item('assets_dir');?>images/small-loader.gif">
+		                                      </td>
+		                                    </tr>
+		                                  </tbody>
+		                                </table>
+									</div>
+								</fieldset>
 								<div class="form-group" style="clear:both;">
 									<div class="col-md-12">
 					                    <input type="hidden" name="contractor_id" id="contractor_id" value="<?php echo $contractors[0]['contractor_id'];?>">
+					                    <input type="hidden" name="requirement_id" id="requirement_id" value="<?php echo $contractors[0]['requirement_id'];?>">
 										<input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['clients_user_id']; ?>">
 										<input type="hidden" name="org_id" id="org_id" value="<?php echo $_SESSION['clients_org_id']; ?>">
-										
+										<?php $ndata = array('requirement_id'=>$contractors[0]['requirement_id'],'contractor_id'=>$contractors[0]['contractor_id']); $this->session->set_userdata($ndata); ?>
 										<a href="<?php echo site_url('clients/contractors/') ?>" class="btn btn-default" >Cancel</a>
 									</div>
 								</div>
@@ -71,3 +98,67 @@
 				</div>
 			</div>
 		</section>
+		<style type="text/css">
+			#dataManual thead th, #dataManual thead td {vertical-align:middle;}
+		</style>
+		<script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/jquery.dataTables.js"></script>
+        <script src="<?php echo config_item('assets_dir'); ?>plugins/jquery-datatable/dataTables.bootstrap.min.js"></script>
+		<!-- page script -->
+		<script type="text/javascript">
+		  $(function () {
+		    $('#dataManual').DataTable({
+		      "bProcessing": true,
+        	  "bServerSide": true,
+		      "sAjaxSource": "<?php echo site_url('clients/contractors/contractors_timesheet_list'); ?>",
+		      "sServerMethod": "POST",
+		      "sPaginationType": "full_numbers",
+		      "iDisplayLength": 10,
+		      "aoColumns": [
+		        {
+		          "sName": "ID",
+		          "bSearchable": false,
+		          "bSortable": false,
+		          "fnRender": function (oObj) {
+		            return oObj;
+		          }
+		        },
+		        {
+		          "sName": "Name",
+		          "sClass": "text-center",
+		          "bSearchable": false,
+		          "bSortable": true,
+		          "fnRender": function (oObj) {
+		              return oObj;
+		          }
+		        },
+		        {
+		          "sName": "Name",
+		          "sClass": "text-center",
+		          "bSearchable": false,
+		          "bSortable": true,
+		          "fnRender": function (oObj) {
+		              return oObj;
+		          }
+		        },
+		        {
+		          "sName": "Name",
+		          "sClass": "text-center",
+		          "bSearchable": false,
+		          "bSortable": true,
+		          "fnRender": function (oObj) {
+		              return oObj;
+		          }
+		        },
+		        {
+		          "sName": "Action",
+		          "sClass": "text-center",
+		          "bSearchable": false,
+		          "bSortable": false,
+		          "fnRender": function (oObj) {
+		            return oObj;
+		          }
+		        }
+		      ]
+		    });
+		  });
+		</script>

@@ -8,6 +8,8 @@
         <script src="<?php echo config_item('assets_dir');?>plugins/node-waves/waves.js"></script>
         <!-- Custom Js -->
         <script src="<?php echo config_item('assets_dir');?>js/admin.js"></script>
+        <script src="<?php echo config_item('assets_dir');?>plugins/chartjs/Chart.bundle.js"></script>
+        
         <!-- Demo Js -->
         <script src="<?php echo config_item('assets_dir');?>js/demo.js"></script>
         <script src="<?php echo config_item('assets_dir');?>plugins/jquery-validation/jquery.validate.js"></script>
@@ -21,5 +23,16 @@
                 }
             });
         </script>
+        <!-- <script type='text/javascript'>
+            $(document).ready(function () {
+                //Disable full page
+                $('body').bind('cut copy paste', function (e) {
+                    e.preventDefault();
+                });
+            });
+            $(document).contextmenu(function() {
+                return false;
+            });
+        </script> -->
     </body>
 </html>

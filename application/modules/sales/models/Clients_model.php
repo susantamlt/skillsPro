@@ -16,11 +16,11 @@
 			"$tableName.decision_maker_name",
 			"$tableName.phone_1",
 			"$tableName.email_1",
-			"$tableName.phone_2",
-			"$tableName.email_2",
+			"$tableName.zip_code",
+			"$tableName.address",
 			"$tableName.created_at",
 		);
-		$indexId     = '$tableName.client_id';
+		$indexId     = "$tableName.client_id";
 		$columnOrder = "$tableName.client_id";
 		$orderby     = "";
 		$joinMe      = "left join $tableName1 on $tableName1.user_id=$tableName.user_id left join $tableName2 on $tableName2.org_id=$tableName.org_id";
@@ -58,6 +58,24 @@
 			$id = 2;
 		}
 		return $id;
+	}
+	public function get_ljp_historyView($id='') {
+		$this->load->model('clients_model');
+		$org_id = $this->session->userdata('sales_org_id');
+		$tableName = 'clients';
+		$tableName1 = 'requirement';
+		$columns   = array(
+			"$tableName.client_id",
+			"$tableName1.no_requirement_fullfilled",
+			"$tableName1.requirement_status",
+			"$tableName.created_at",
+		);
+		$indexId     = "$tableName.client_id";
+		$columnOrder = "$tableName.client_id";
+		$orderby     = "";
+		$joinMe      = "inner join $tableName1 on $tableName1.client_id=$tableName.client_id";
+		$condition   = "WHERE $tableName.org_id='".$org_id."'AND $tableName.client_id='".$id."'";
+		return $this->db->drawdatatable($tableName, $columns, $indexId, $joinMe, $condition, $orderby);
 	}
 
 	

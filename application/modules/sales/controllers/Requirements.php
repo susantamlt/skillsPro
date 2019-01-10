@@ -37,11 +37,11 @@ class Requirements extends MX_Controller
 			if($row[6]!=''){
 				$row[6]= ucwords($row[6]);
 			}
-			if($row[7]!=''){
-				$row[7]= ucwords($row[7]);
-			}
 			if($row[8]!=''){
 				$row[8]= ucwords($status[$row[8]]);
+			}
+			if($row[7]!=''){
+				$row[7]= ucwords($row[7]);
 			}
 			if($row[9]!=''){
 				$row[9]= date('jS M Y', strtotime($row[9]));
@@ -70,9 +70,17 @@ class Requirements extends MX_Controller
 	}
 
 	public function requirements_assign($id="") {
-		$this->load->view('common/sales-top');
-		$this->load->view('requirements/requirements-assign');
-		$this->load->view('common/sales-bottom');
+		if($id > 0){
+			$data['user'] = $this->requirements_model->requirements_assaign($id);
+			$data['sdata'] = $this->requirements_model->requirements_assaignView($id);
+			$data['id'] = $id;
+			$this->load->view('common/sales-top');
+			$this->load->view('requirements/requirements-assign',$data);
+			$this->load->view('common/sales-bottom');
+		} else {
+			$this->load->view('common/sales-top');
+			$this->load->view('common/sales-bottom');
+		}
 	}
 
 	public function requirements_save() {
@@ -84,6 +92,36 @@ class Requirements extends MX_Controller
 		} else {
 			$_data['status']=0;
 			$_data['msg']='Failure';
+		}
+		echo json_encode($_data);
+	}
+
+	public function source_save() {
+		$data = $this->input->post();
+		if(!empty($data)){
+			$return = $this->requirements_model->source_save($data);
+			if($return==1){
+				$_data['status']=0;
+				$_data['msg']='Please provied source user id';
+			} else if($return==2){
+				$_data['status']=0;
+				$_data['msg']='Please provied organization id';
+			} else if($return==3){
+				$_data['status']=0;
+				$_data['msg']='Please provied requirement id';
+			} else if($return==4){
+				$_data['status']=0;
+				$_data['msg']='Already assign';
+			} else if($return==5){
+				$_data['status']=1;
+				$_data['msg']='The data update successfully';
+			} else {
+				$_data['status']=1;
+				$_data['msg']='The data insert successfully';
+			}
+		} else {
+			$_data['status']=0;
+			$_data['msg']='Please provied source user id, organization id, requirement id';
 		}
 		echo json_encode($_data);
 	}

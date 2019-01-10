@@ -18,19 +18,20 @@
                                         <input type="checkbox" id="checkbox-1-0" class="regular-checkbox" />
                                         <label for="checkbox-1-0"></label>
                                       </th>
-                                      <th title="Requirement Status"> Requirement Status </th>
-                                      <th title="Requirement"> Requirement </th>
-                                      <th title="No Requirement Fullfilled"> No Requirement Fullfilled </th>
-                                      <th title="Proposed Hourly Rate"> Proposed Hourly Rate </th>
+                                      <th title="Title"> Title </th>
+                                      <th title="No of Requirement" style=""> No Of Requirements </th>
+                                      <th title="No Requirement Fullfilled"> NO Of Requirements Fullfilled</th>
+                                      <th title="Proposed Hourly Rate"> Propose Hourly Rate </th>
                                       <th title="Final Hourly Rate"> Final Hourly Rate </th>
-                                      <th title="Final Comments On Requirement"> Final Comments On Requirement </th>
+                                      <th title="Assign By"> Assigned by </th>
+                                      <th title="Status"> Status </th>
+                                      <th title="Expected Date of Closure"> Expected Date Of Closer</th>
                                       <th title="Action" style="width:50px important;"> Action </th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr>
                                       <td colspan="10" class="text-center">
-                                        <img src="<?php echo config_item('root_dir');?>assets/images/small-loader.gif">
                                       </td>
                                     </tr>
                                   </tbody>
@@ -108,7 +109,25 @@
           }
         },
         {
-          "sName": "Gender",
+          "sName": "Assign",
+          "sClass": "text-center",
+          "bSearchable": false,
+          "bSortable": true,
+          "fnRender": function (oObj) {
+            return oObj;
+          }
+        },
+        {
+          "sName": "Assign",
+          "sClass": "text-center",
+          "bSearchable": false,
+          "bSortable": true,
+          "fnRender": function (oObj) {
+            return oObj;
+          }
+        },
+        {
+          "sName": "Assign",
           "sClass": "text-center",
           "bSearchable": false,
           "bSortable": true,
